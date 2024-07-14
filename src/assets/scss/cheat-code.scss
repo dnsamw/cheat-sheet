@@ -1,0 +1,24 @@
+.cheat-code {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    
+    code{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 5px;
+        background-color: #161b21;
+        border-radius: 10px;
+        padding: 0.5em;
+        width: 100%;
+        transition: 300ms;
+        color: aliceblue;
+        text-wrap: wrap;
+        
+        &:hover{
+            background-color: #2ea04326;
+            color: #7ee787;
+        }
+    }
+}

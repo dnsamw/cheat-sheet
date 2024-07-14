@@ -1,0 +1,28 @@
+form{
+    border: 1px solid #30363d;
+    border-radius: 15px;
+    padding: 1em;
+    margin-bottom: 1em;
+    color: #666;
+    
+    .input-unit{
+        margin-bottom: 1em;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+        
+        input,textarea{
+            border: 1px solid #30363d;
+            font-size: 1.4rem;
+            padding: 0.5em;
+            border-radius: 5px;
+            background-color: #000;
+            color: #666;
+            
+            &:focus{
+                border: 1px solid #4e7ec6;
+                outline: 0;
+            }
+        }
+    }
+}
