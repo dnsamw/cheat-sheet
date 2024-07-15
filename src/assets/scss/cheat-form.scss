@@ -10,6 +10,7 @@ form{
         display: flex;
         flex-direction: column;
         gap: 0.5em;
+        width: 100%;
         
         input,textarea{
             border: 1px solid #30363d;
@@ -24,5 +25,21 @@ form{
                 outline: 0;
             }
         }
+        button{
+            background-color: #4ec6563d;
+            color: #fff;
+            border: 0;
+            border-radius: 15px;
+            padding: 0.5em 1em;
+            font-size: 1.4rem;
+            transition: 300ms;
+            width: 200px;
+    
+            &:hover{
+                background-color:#4ec656;
+                cursor: pointer;
+            }
+        }
     }
+
 }
