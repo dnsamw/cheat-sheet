@@ -1,0 +1,75 @@
+// how to use the mediq queries
+// use small-up, -only, medium-up, -only or large-up, -only for $breakpoints
+// use landscape or portrait for $orientation
+// @media #{$small-up} { }
+// @media #{$small-only} { }
+// @media #{$medium-up} { }
+// @media #{$medium-only} { }
+// @media #{$large-up} { }
+// @media #{$large-only} { }
+// @media #{$xlarge-up} { }
+// @media #{$xlarge-only} { }
+// @media #{$xxlarge-up} { }
+// @media #{$xxlarge-only} { }
+
+// Breakpoints for each screen sizes
+// -----------------------------
+$screen: "only screen";
+
+$small-up: $screen;
+$small-only: "#{$screen} and (max-width: 767px)";
+$medium-up: "#{$screen} and (min-width: 768px)";
+$medium-only: "#{$screen} and (min-width: 768px) and (max-width: 970px)";
+$large-up: "#{$screen} and (min-width: 971px)";
+$large-only: "#{$screen} and (min-width: 971px) and (max-width: 1024px)";
+$xlarge-up: "#{$screen} and (min-width: 1025px)";
+$xlarge-only: "#{$screen} and (min-width: 1025px) and (max-width: 1240px)";
+$xxlarge-up: "#{$screen} and (min-width: 1241px)";
+$xxlarge-only: $xxlarge-up;
+
+$landscape: "#{$screen} and (orientation: landscape)";
+$portrait: "#{$screen} and (orientation: portrait)";
+// -----------------------------
+
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: sans-serif;
+  // max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+.responsive {
+  width: 100%;
+  @media #{$small-only} {
+    // background: #ff0000;
+    width: 98%;
+  }
+  @media #{$medium-only} {
+    // background: #ff6f00;
+    width: 95%;
+  }
+  @media #{$large-only} {
+    // background: #ffe600;
+    width: 85%;
+  }
+  @media #{$xlarge-up} {
+    // background: #99ff00;
+    width: 80%;
+  }
+}
+
+.main-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+}
+
+// .main-container {
+
+// }

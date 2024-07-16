@@ -1,0 +1,36 @@
+.selected-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 5px;
+  border: 1px solid #30363d;
+  font-size: 1.4rem;
+  padding: 0.9em;
+  border-radius: 5px;
+  background-color: #000;
+  color: #666;
+  margin-bottom: 1em;
+
+  span {
+    border: 1px solid #30363d;
+    padding: 0.5em;
+    border-radius: 15px;
+    margin-right: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    .close-btn {
+      cursor: pointer;
+      &:hover {
+        color: #ff4444;
+        background-color: #ff44443d;
+      }
+    }
+  }
+}
+
+.tag-wrapper {
+  cursor: pointer;
+}

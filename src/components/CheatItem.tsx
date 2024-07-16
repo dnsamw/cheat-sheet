@@ -1,6 +1,7 @@
 import Tag from "./UI/Tag";
 import CheatCode from "./CheatCode";
-import { I_CheatItem, TagType } from "../types/item";
+import { I_CheatItem } from "../types/item";
+import { TagType } from "../types/tag";
 import "../assets/scss/cheat-item.scss";
 type Props = {
   item: I_CheatItem;

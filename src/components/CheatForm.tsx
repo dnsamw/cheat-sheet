@@ -4,6 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Alert, { AlertTypes } from "./UI/Alert";
 import { useData } from "../hooks/useData";
+import TagSelector from "./TagSelector";
 
 type Props = {};
 
@@ -58,6 +59,9 @@ function CheatForm({}: Props) {
         {errors.code && (
           <Alert type={AlertTypes.error} message={errors.code.message} />
         )}
+      </div>
+      <div className="input-unit">
+        <TagSelector />
       </div>
       <div className="input-unit">
         <button>Add</button>

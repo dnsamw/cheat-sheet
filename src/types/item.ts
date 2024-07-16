@@ -1,3 +1,5 @@
+import { TagType } from "./tag";
+
 export interface I_CheatItem {
   id: string;
   title: string;
@@ -5,11 +7,6 @@ export interface I_CheatItem {
   codes: string[];
   tags: TagType[];
 }
-
-export type TagType = {
-  name: string;
-  color: string;
-};
 
 export interface I_ItemInitialState {
   items: I_CheatItem[];
@@ -29,21 +26,21 @@ export interface ItemAction {
 
 // An enum with all the types of actions to use in our reducer
 export enum ItemActionKind {
-  FETCH_ITEMS_REQUEST = 'FETCH_ITEMS_REQUEST',
-  FETCH_ITEMS_SUCCESS = 'FETCH_ITEMS_SUCCESS',
-  FETCH_ITEMS_FAILURE = 'FETCH_ITEMS_FAILURE',
-  FETCH_ITEM_REQUEST = 'FETCH_ITEM_REQUEST',
-  FETCH_ITEM_SUCCESS = 'FETCH_ITEM_SUCCESS',
-  FETCH_ITEM_FAILURE = 'FETCH_ITEM_FAILURE',
-  CREATE_ITEM_REQUEST = 'CREATE_ITEM_REQUEST',
-  CREATE_ITEM_SUCCESS = 'CREATE_ITEM_SUCCESS',
-  CREATE_ITEM_FAILURE = 'CREATE_ITEM_FAILURE',
-  UPDATE_ITEM_REQUEST = 'UPDATE_ITEM_REQUEST',
-  UPDATE_ITEM_SUCCESS = 'UPDATE_ITEM_SUCCESS',
-  UPDATE_ITEM_FAILURE = 'UPDATE_ITEM_FAILURE',
-  DELETE_ITEM_REQUEST = 'DELETE_ITEM_REQUEST',
-  DELETE_ITEM_SUCCESS = 'DELETE_ITEM_SUCCESS',
-  DELETE_ITEM_FAILURE = 'DELETE_ITEM_FAILURE',
+  FETCH_ITEMS_REQUEST = "FETCH_ITEMS_REQUEST",
+  FETCH_ITEMS_SUCCESS = "FETCH_ITEMS_SUCCESS",
+  FETCH_ITEMS_FAILURE = "FETCH_ITEMS_FAILURE",
+  FETCH_ITEM_REQUEST = "FETCH_ITEM_REQUEST",
+  FETCH_ITEM_SUCCESS = "FETCH_ITEM_SUCCESS",
+  FETCH_ITEM_FAILURE = "FETCH_ITEM_FAILURE",
+  CREATE_ITEM_REQUEST = "CREATE_ITEM_REQUEST",
+  CREATE_ITEM_SUCCESS = "CREATE_ITEM_SUCCESS",
+  CREATE_ITEM_FAILURE = "CREATE_ITEM_FAILURE",
+  UPDATE_ITEM_REQUEST = "UPDATE_ITEM_REQUEST",
+  UPDATE_ITEM_SUCCESS = "UPDATE_ITEM_SUCCESS",
+  UPDATE_ITEM_FAILURE = "UPDATE_ITEM_FAILURE",
+  DELETE_ITEM_REQUEST = "DELETE_ITEM_REQUEST",
+  DELETE_ITEM_SUCCESS = "DELETE_ITEM_SUCCESS",
+  DELETE_ITEM_FAILURE = "DELETE_ITEM_FAILURE",
 }
 
 export interface FetchItemsRequestAction {
@@ -108,7 +105,7 @@ export interface DeleteItemRequestAction {
 
 export interface DeleteItemSuccessAction {
   type: ItemActionKind.DELETE_ITEM_SUCCESS;
-  payload: string;  // id of the deleted item
+  payload: string; // id of the deleted item
 }
 
 export interface DeleteItemFailureAction {
