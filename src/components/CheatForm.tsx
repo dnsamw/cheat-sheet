@@ -1,5 +1,5 @@
 import "../assets/scss/cheat-form.scss";
-import { useForm, FieldValues } from "react-hook-form";
+import { useForm, FieldValues, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Alert, { AlertTypes } from "./UI/Alert";
@@ -12,6 +12,7 @@ const schema = z.object({
   title: z.string().min(1),
   text: z.string().min(1),
   code: z.string().min(1),
+  tags: z.array(z.string()).min(1, "Select at least one tag"),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -21,20 +22,21 @@ function CheatForm({}: Props) {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const onSubmit = async (data: FieldValues) => {
     console.log(data);
-    await createCheatItem({
-      title: data.title,
-      text: data.text,
-      codes: ["npm start", "nom run dev"],
-      tags: [
-        { name: "react", color: "blue" },
-        { name: "typescript", color: "skyblue" },
-      ],
-    });
+    // await createCheatItem({
+    //   title: data.title,
+    //   text: data.text,
+    //   codes: ["npm start", "nom run dev"],
+    //   tags: [
+    //     { name: "react", color: "blue" },
+    //     { name: "typescript", color: "skyblue" },
+    //   ],
+    // });
   };
 
   return (
@@ -61,7 +63,20 @@ function CheatForm({}: Props) {
         )}
       </div>
       <div className="input-unit">
-        <TagSelector />
+      <Controller
+          name="tags"
+          control={control}
+          defaultValue={[]}
+          render={({ field }) => (
+            <TagSelector
+              value={field.value}
+              onChange={field.onChange}
+            />
+          )}
+        />
+        {errors.tags && (
+          <Alert type={AlertTypes.error} message={errors.tags.message} />
+        )}
       </div>
       <div className="input-unit">
         <button>Add</button>

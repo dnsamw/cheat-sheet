@@ -1,11 +1,15 @@
-import React from 'react'
+import React from "react";
+import MainLayout from "../layouts/MainLayout";
+import LoginForm from "../components/LoginForm";
 
-type Props = {}
+type Props = {};
 
 function LoginPage({}: Props) {
   return (
-    <div style={{ color: "white" }}>LoginPage</div>
-  )
+    <MainLayout>
+      <LoginForm />
+    </MainLayout>
+  );
 }
 
-export default LoginPage
+export default LoginPage;
