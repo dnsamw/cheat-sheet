@@ -15,8 +15,12 @@ function CheatCode({ code }: Props) {
   return (
     <div className="cheat-code">
       <code onClick={() => handleClick(code)}>
+        <span>
         {code}
+        </span>
+        <i>
         {!isCoppiedCode ? <LuCopy style={{ color: "white" }} /> : <LuCopyCheck style={{ color: "#7ee787" }}/>}
+        </i>
       </code>
     </div>
   );

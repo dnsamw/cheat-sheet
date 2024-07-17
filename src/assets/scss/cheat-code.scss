@@ -11,14 +11,21 @@
         background-color: #161b21;
         border-radius: 10px;
         padding: 0.5em;
+        padding-right: .7em;
         width: 100%;
         transition: 300ms;
         color: aliceblue;
         text-wrap: wrap;
+
+        span{
+            text-align: left;
+            overflow-wrap: anywhere;
+        }
         
         &:hover{
             background-color: #2ea04326;
             color: #7ee787;
         }
+
     }
 }

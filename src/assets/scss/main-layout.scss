@@ -46,11 +46,11 @@ body {
   width: 100%;
   @media #{$small-only} {
     // background: #ff0000;
-    width: 98%;
+    width: 100%;
   }
   @media #{$medium-only} {
     // background: #ff6f00;
-    width: 95%;
+    width: 98%;
   }
   @media #{$large-only} {
     // background: #ffe600;
