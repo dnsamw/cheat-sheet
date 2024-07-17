@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect } from "react";
 import { ItemContext } from "../contexts/itemContext";
 import { I_CheatItem, ItemActionKind } from "../types/item";
-import { createItem, getAllItems,getItemById } from "../services/firestoreService";
+import { createItem, deleteItem, getAllItems,getItemById } from "../services/firestoreService";
 
 export const useData = () => {
   const context = useContext(ItemContext);
@@ -75,11 +75,31 @@ export const useData = () => {
     }
   }, [dispatch]);
 
+  const deleteCheatItem = useCallback(async (itemId: string) => {
+    try {
+      dispatch({ type: ItemActionKind.DELETE_ITEM_REQUEST });
+      await deleteItem(itemId);
+      dispatch({
+        type: ItemActionKind.DELETE_ITEM_SUCCESS,
+        payload: itemId,
+      });
+    } catch (error) {
+      dispatch({
+        type: ItemActionKind.DELETE_ITEM_FAILURE,
+        payload:
+          error instanceof Error
+            ? error.message
+            : "An unknown error occurred",
+      });
+    }
+  }, [dispatch]);
+
   return {
     items: state.items,
     error: state.error,
     loading: state.loading,
     getCheatItemById,
     createCheatItem,
+    deleteCheatItem,
   };
 };

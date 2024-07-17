@@ -9,7 +9,7 @@ type Props = {
   onChange: (value: string[]) => void;
 };
 
-const tagdata: TagType[] = [
+export const tagdata: TagType[] = [
   { name: "Laravel", color: "#ff6000", bgColor: "#ff60003d" },
   { name: "Git", color: "#7d00ff", bgColor: "#7d00ff3d" },
   { name: "TypeScript", color: "#0084ff", bgColor: "#0084ff3d" },

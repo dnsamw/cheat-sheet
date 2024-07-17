@@ -8,15 +8,13 @@ import MainLayout from "./layouts/MainLayout";
 import Router from "./routes/Router";
 
 function App() {
-  const { items, error, loading } = useData();
+  const { error, loading } = useData();
   return (
     <MainLayout>
-      {/* <div className="App">
-      {loading && <Loading />}
-      {error && <p>Error: {error}</p>}
-      <CheatForm />
-      {items?.map((cheatItem:any)=><CheatItem key={cheatItem.id} item={cheatItem} />)}
-    </div> */}
+      <div className="App">
+        {loading && <Loading />}
+        {error && <p>Error: {error}</p>}
+      </div>
       <Router />
     </MainLayout>
   );

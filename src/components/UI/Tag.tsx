@@ -2,8 +2,8 @@ import React from 'react'
 import '../../assets/scss/tag.scss'
 
 type Props = {
-    bgColor: string;
-    color: string;
+    bgColor?: string;
+    color?: string;
     tag: string;
     onClick?: (tag:string) => void;
 }

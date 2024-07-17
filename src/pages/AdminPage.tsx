@@ -13,11 +13,9 @@ function AdminPage({}: Props) {
   return (
     <MainLayout>
       <>
-        {loading && <Loading />}
-        {error && <p>Error: {error}</p>}
         <CheatForm />
         {items?.map((cheatItem: any) => (
-          <CheatItem key={cheatItem.id} item={cheatItem} />
+          <CheatItem key={cheatItem.id} item={cheatItem}/>
         ))}
       </>
     </MainLayout>

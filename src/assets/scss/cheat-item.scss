@@ -26,4 +26,20 @@
             padding: 0;
         }
     }
+
+    .cheat-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .edit-btn{
+            cursor: pointer;
+            color: #4ec656;
+            font-size: 1.5rem;
+        }
+        .delete-btn{
+            cursor: pointer;
+            color: #ff4444;
+            font-size: 1.5rem;
+        }
+    }
 }
