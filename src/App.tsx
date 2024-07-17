@@ -11,10 +11,6 @@ function App() {
   const { error, loading } = useData();
   return (
     <MainLayout>
-      <div className="App">
-        {loading && <Loading />}
-        {error && <p>Error: {error}</p>}
-      </div>
       <Router />
     </MainLayout>
   );

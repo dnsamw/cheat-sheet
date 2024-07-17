@@ -40,6 +40,13 @@ body {
   margin: 0 auto;
   padding: 0 2rem;
   text-align: center;
+
+  @media #{$small-only} {
+    padding: 0 1rem;
+  }
+  @media #{$medium-only} {
+    padding: 0 1.2rem;
+  }
 }
 
 .responsive {
