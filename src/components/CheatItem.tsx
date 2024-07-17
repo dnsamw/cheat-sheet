@@ -6,18 +6,30 @@ import "../assets/scss/cheat-item.scss";
 import { tagdata } from "./TagSelector";
 import { LuFileEdit, LuTrash2 } from "react-icons/lu";
 import { useData } from "../hooks/useData";
+import { useState } from "react";
+import YesNoDialogModal from "./UI/YesNoDialogModal";
 type Props = {
   item: I_CheatItem;
 };
 
 function CheatItem({ item }: Props) {
 
+  const [showConfirm, setShowConfirm] = useState(false);
   const {deleteCheatItem} = useData()
 
-  const handleDelete = ()=>{
-    console.log("delete", item.id);
-    deleteCheatItem(item.id)
+  const handleDeleteClick = ()=>{
+    console.log("deleting", item.id);
+    setShowConfirm(true);
   }
+
+  
+  const handleConfirm = (confirm:boolean) => {
+    setShowConfirm(false);
+    if (confirm) {
+      console.log("DELETED")
+      deleteCheatItem(item.id)
+    }
+  };
 
   return (
     <>
@@ -56,9 +68,10 @@ function CheatItem({ item }: Props) {
         </div>
         <div className="cheat-actions">
           <span onClick={() => {}} className="edit-btn"><LuFileEdit/></span>
-          <span onClick={handleDelete} className="delete-btn"><LuTrash2/></span>
+          <span onClick={handleDeleteClick} className="delete-btn"><LuTrash2/></span>
         </div>        
       </div>
+      {showConfirm && <YesNoDialogModal onConfirm={handleConfirm} message={`Are you sure you want to delete "${item.title}" ?`}/>}
     </>
   );
 }

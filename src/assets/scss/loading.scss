@@ -7,6 +7,8 @@
     justify-content: center;
     align-items: center;
     position: fixed;
+    top:0;
+    z-index: 9999;
     
 }
 .loading {
@@ -21,7 +23,6 @@
     position: fixed;
     // left: 50%;
     // top: 50%;
-    z-index: 9999;
   } 
   
   @keyframes rotate {
