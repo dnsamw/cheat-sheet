@@ -25,6 +25,7 @@ function CheatForm({}: Props) {
     handleSubmit,
     control,
     formState: { errors },
+    reset
   } = useForm<FormData>({ resolver: zodResolver(schema),defaultValues: {
     title: '',
     text: '',
@@ -50,6 +51,7 @@ function CheatForm({}: Props) {
       codes: data.codes,
       tags: data.tags,
     });
+    reset();
   };
 
   return (
