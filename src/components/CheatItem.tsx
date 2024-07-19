@@ -35,7 +35,7 @@ function CheatItem({ item }: Props) {
     <>
       <div className="cheat-item">
         <div className="cheat-title">{item.title}</div>
-        <div className="cheat-text">{item.text}</div>
+        <div className="cheat-text" dangerouslySetInnerHTML={{ __html: item.text }} />
         {item.codes.map((code, index) => (
           <CheatCode key={index} code={code} />
         ))}
