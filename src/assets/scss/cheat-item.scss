@@ -1,45 +1,48 @@
 .cheat-item {
-    border: 1px solid #30363d;
-    border-radius: 15px;
-    padding: 1em;
-    margin-bottom: 1em;
-    // background-color: #fff;
+  border: 1px solid #30363d;
+  border-radius: 15px;
+  padding: 1em;
+  margin-bottom: 1em;
+  // background-color: #fff;
 
-    .cheat-title {
-        font-size: 1.5rem;
-        font-weight: 300;
-        margin-bottom: 0.5em;
-        color: #4e7ec6;
-    }
+  .cheat-title {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 0.5em;
+    color: #4e7ec6;
+  }
 
-    .cheat-text {
-        margin-bottom: 0.5em;
-        font-size: 1.4rem;
-        color: #666;
-    }
+  .cheat-text {
+    margin-bottom: 0.5em;
+    font-size: 1.4rem;
+    color: #666;
 
-    .cheat-tags {
-        opacity:1;
-        ul {
-            list-style: none;
-            margin-top: 5px;
-            padding: 0;
-        }
-    }
+    text-align: left;
+    overflow-wrap: anywhere;
+  }
 
-    .cheat-actions {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        .edit-btn{
-            cursor: pointer;
-            color: #4ec656;
-            font-size: 1.5rem;
-        }
-        .delete-btn{
-            cursor: pointer;
-            color: #ff4444;
-            font-size: 1.5rem;
-        }
+  .cheat-tags {
+    opacity: 1;
+    ul {
+      list-style: none;
+      margin-top: 5px;
+      padding: 0;
     }
+  }
+
+  .cheat-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .edit-btn {
+      cursor: pointer;
+      color: #4ec656;
+      font-size: 1.5rem;
+    }
+    .delete-btn {
+      cursor: pointer;
+      color: #ff4444;
+      font-size: 1.5rem;
+    }
+  }
 }
