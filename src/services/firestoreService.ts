@@ -1,9 +1,11 @@
-import { getFirestore, collection, getDocs, doc, addDoc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
-import app from "../config/firebaseConfig";
+import { collection, getDocs, doc, addDoc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
+import {db} from "../config/firebaseConfig";
 import { I_CheatItem } from "../types/item";
+import { I_User } from "../types/user";
 
-const db = getFirestore(app);
+
 const itemsCollection = collection(db, "items");
+const usersCollection = collection(db, "users");
 
 const getAllItems = async () => {
   const itemsSnapshot = await getDocs(itemsCollection);
@@ -40,6 +42,24 @@ export const updateItem = async (id: string, item: Partial<I_CheatItem>): Promis
 
 export const deleteItem = async (id: string): Promise<void> => {
   const docRef = doc(itemsCollection, id);
+  await deleteDoc(docRef);
+};
+
+
+// USERS
+
+export const createUser = async (user: Omit<I_User, 'id'>): Promise<string> => {
+  const docRef = await addDoc(usersCollection, user);
+  return docRef.id;
+};
+
+export const updateUser = async (id: string, user: Partial<I_CheatItem>): Promise<void> => {
+  const docRef = doc(usersCollection, id);
+  await updateDoc(docRef, user);
+};
+
+export const deleteUser = async (id: string): Promise<void> => {
+  const docRef = doc(usersCollection, id);
   await deleteDoc(docRef);
 };
 

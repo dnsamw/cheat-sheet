@@ -9,6 +9,7 @@ export interface RouteInterface<T = {}> {
 }
 
 const LoginPage = lazy(() => import("../pages/LoginPage"));
+const RegisterPage = lazy(() => import("../pages/RegisterPage"));
 const AdminPage = lazy(() => import("../pages/AdminPage"));
 
 export const authenticatedRoutes: Array<RouteInterface> = [
@@ -19,5 +20,6 @@ export const authenticatedRoutes: Array<RouteInterface> = [
 ];
 
 export const unAuthenticatedRoutes: Array<RouteInterface> = [
-  { path: "/", element: LoginPage },
+  { path: "/login", element: LoginPage },
+  { path: "/register", element: RegisterPage },
 ];

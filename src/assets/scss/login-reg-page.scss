@@ -1,0 +1,35 @@
+.login-page-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  .controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // gap: 1em;
+    border: 1px solid #30363d;
+    border-radius: 15px;
+    overflow: hidden;
+
+    button {
+      background-color: #0000;
+      width: 50%;
+      color: #fff;
+      border: 0;
+    //   border-radius: 15px;
+      padding: 0.5em 2em;
+      font-size: 1.4rem;
+      transition: 300ms;
+      white-space: nowrap;
+      cursor: pointer;
+
+      &.active {
+        background-color: #4ec656;
+        cursor: pointer;
+      }
+    }
+  }
+}

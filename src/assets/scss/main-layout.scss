@@ -37,8 +37,9 @@ $portrait: "#{$screen} and (orientation: portrait)";
 body {
   font-family: sans-serif;
   // max-width: 1024px;
-  margin: 0 auto;
-  padding: 0 2rem;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   text-align: center;
 
   @media #{$small-only} {
@@ -51,6 +52,10 @@ body {
 
 .responsive {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center ;
+  justify-content: center;
   @media #{$small-only} {
     // background: #ff0000;
     width: 100%;

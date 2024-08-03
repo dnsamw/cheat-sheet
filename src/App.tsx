@@ -10,9 +10,9 @@ import Router from "./routes/Router";
 function App() {
   const { error, loading } = useData();
   return (
-    <MainLayout>
+    <>
       <Router />
-    </MainLayout>
+    </>
   );
 }
 
