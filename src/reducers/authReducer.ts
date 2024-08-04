@@ -1,53 +1,47 @@
-import {
-    I_UserInitialState,
-    UserActionKind,
-    UserActionUnion,
-  } from "../types/user";
-  
-  export const initialState: I_UserInitialState = {
-    user: null,
-    role: null,
-    loading: false,
-    error: null,
-  };
-  
-  const UserReducer = (
-    state: I_UserInitialState = initialState,
-    action: UserActionUnion
-  ): I_UserInitialState => {
-    switch (action.type) {
-  
-        //Creating a User
-        case UserActionKind.CREATE_USER_REQUEST:
-          return { ...state, loading: true, error: null };
-          
-        case UserActionKind.CREATE_USER_SUCCESS:
-          return {
-            ...state,
-            loading: false,
-            user: action.payload
-          };
+import { User } from "firebase/auth";
 
-        case UserActionKind.CREATE_USER_FAILURE:
-          return { ...state, loading: false, error: action.payload };
-  
-        //Deleting an User
-        case UserActionKind.DELETE_USER_REQUEST:
-          return { ...state, loading: true, error: null };
+export type AuthState = {
+  user: User | null;
+  role: string | null;
+  loading: boolean
+};
 
-        case UserActionKind.DELETE_USER_SUCCESS:
-          return {
-            ...state,
-            loading: false,
-            user: null,
-          };
-        case UserActionKind.DELETE_USER_FAILURE:
-          return { ...state, loading: false, error: action.payload };
+// ts-type for action, action is just and object with 2 properties: type and payload 
+export type AuthAction =
+  | { type: "LOGIN"; payload: { user: User; role: string } }
+  | { type: "LOGOUT" }
+  | { type: 'SET_LOADING'; payload: boolean };
 
-      default:
-        return state;
-    }
-  };
-  
-  export default UserReducer;
-  
+export const initialState: AuthState = {
+  user: null,
+  role: null,
+  loading: true
+};
+
+// Reducer function, is a pure function that takes state and action, returns new state depending on action
+const AuthReducer = (state: AuthState, action: AuthAction): AuthState => {
+  switch (action.type) {
+    case "LOGIN":
+      return {
+        user: action.payload.user,
+        role: action.payload.role,
+        loading: false
+      };
+    case "LOGOUT":
+      return {
+        user: null,
+        role: null,
+        loading: false
+      };
+    case 'SET_LOADING':
+    return {
+        ...state,
+        loading: action.payload,
+    };
+    default:
+      return state;
+  }
+};
+
+
+export default AuthReducer;

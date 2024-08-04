@@ -8,18 +8,16 @@ export interface RouteInterface<T = {}> {
   props?: T;
 }
 
-const LoginPage = lazy(() => import("../pages/LoginPage"));
-const RegisterPage = lazy(() => import("../pages/RegisterPage"));
+
+const AuthPage = lazy(() => import("../pages/AuthPage"));
 const AdminPage = lazy(() => import("../pages/AdminPage"));
+const UserPage = lazy(() => import("../pages/UserPage"));
 
 export const authenticatedRoutes: Array<RouteInterface> = [
-  {
-    path: "/",
-    element: AdminPage,
-  },
+  { path: "/", element: AdminPage },
 ];
 
 export const unAuthenticatedRoutes: Array<RouteInterface> = [
-  { path: "/login", element: LoginPage },
-  { path: "/register", element: RegisterPage },
+  { path: "/", element: UserPage },
+  { path: "/auth", element: AuthPage },
 ];

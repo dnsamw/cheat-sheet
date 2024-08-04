@@ -9,7 +9,7 @@ type Props = {
 function MainNavigatorLayout({children}: Props) {
   return (
     <>
-    <NavbarPrime />
+    <NavbarPrime/>
     <MainLayout>
         {children}
     </MainLayout>

@@ -10,9 +10,10 @@ import { useState } from "react";
 import YesNoDialogModal from "./UI/YesNoDialogModal";
 type Props = {
   item: I_CheatItem;
+  isLoggedIn: boolean;
 };
 
-function CheatItem({ item }: Props) {
+function CheatItem({ item,isLoggedIn }: Props) {
 
   const [showConfirm, setShowConfirm] = useState(false);
   const {deleteCheatItem} = useData()
@@ -66,10 +67,10 @@ function CheatItem({ item }: Props) {
             })}
           </ul>
         </div>
-        <div className="cheat-actions">
+        {isLoggedIn && <div className="cheat-actions">
           <span onClick={() => {}} className="edit-btn"><LuFileEdit/></span>
           <span onClick={handleDeleteClick} className="delete-btn"><LuTrash2/></span>
-        </div>        
+        </div>}        
       </div>
       {showConfirm && <YesNoDialogModal onConfirm={handleConfirm} message={`Are you sure you want to delete "${item.title}" ?`}/>}
     </>

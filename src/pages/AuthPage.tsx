@@ -4,6 +4,8 @@ import LoginForm from "../components/LoginForm";
 import RegisterForm from "../components/RegisterForm";
 import '../assets/scss/login-reg-page.scss';
 import MatrixWrapper from "../components/Experimental/MatrixWrapper";
+import { useAuth } from "../contexts/authContext";
+import { Navigate } from "react-router-dom";
 
 type Props = {};
 
@@ -12,9 +14,16 @@ enum FormTypes {
   REGISTER = "register",
 }
 
-function LoginPage({}: Props) {
+function AuthPage({}: Props) {
 
   const [formType, setFormType] = useState<FormTypes>(FormTypes.LOGIN);
+
+  const { state } = useAuth();
+  const isUserLoggedIn = !!state?.user;
+
+  if (isUserLoggedIn) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <MainLayout>
@@ -43,4 +52,4 @@ function LoginPage({}: Props) {
   );
 }
 
-export default LoginPage;
+export default AuthPage;

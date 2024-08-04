@@ -1,41 +1,32 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import {
-  authenticatedRoutes,
-  RouteInterface,
-  unAuthenticatedRoutes,
-} from "./routes";
+// src/routes/Router.tsx
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { authenticatedRoutes, RouteInterface, unAuthenticatedRoutes } from "./routes";
 import { Suspense } from "react";
+import { useAuth } from "../contexts/authContext";
 
 function Router() {
-  const isUserLoggedIn = true;
-
-  const mapRoutes = (
-    routesArr: Array<RouteInterface>,
-    keyPrefix: "unAuth_" | "auth_"
-  ) => {
-    return (
-      <Suspense fallback={<div style={{ color: "white" }}>Loading...</div>}>
-        <Routes>
-          {routesArr.map((route: any, i: number) => {
-            const LazyComponent = route.element;
-            return (
-            <Route
-              key={keyPrefix + i}
-              path={route.path}
-              element={<LazyComponent />}
-            />
-          )})}
-        </Routes>
-      </Suspense>
-    );
-  };
+  const { state } = useAuth();  
+  const isUserLoggedIn = !!state?.user;
 
   return (
     <BrowserRouter>
-      {isUserLoggedIn
-        ? mapRoutes(authenticatedRoutes, "auth_")
-        : mapRoutes(unAuthenticatedRoutes, "unAuth_")}
+      <Suspense fallback={<div style={{ color: "white" }}>Loading...</div>}>
+        <Routes>
+          {(isUserLoggedIn ? authenticatedRoutes : unAuthenticatedRoutes).map((route: RouteInterface, i: number) => {
+            const LazyComponent = route.element;
+            return (
+              <Route
+                key={`${isUserLoggedIn ? 'auth' : 'unauth'}_${i}`}
+                path={route.path}
+                element={<LazyComponent />}
+              />
+            );
+          })}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }
+
 export default Router;
