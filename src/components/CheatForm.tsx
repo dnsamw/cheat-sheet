@@ -43,7 +43,7 @@ function CheatForm({}: Props) {
   
 
   const onSubmit = async (data: FieldValues) => {
-    console.log(data);
+    // console.log(data);
     await createCheatItem({
       title: data.title,
       text: data.text,

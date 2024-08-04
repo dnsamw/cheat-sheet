@@ -27,7 +27,7 @@ function LoginForm({}: Props) {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const onSubmit = async (data: FieldValues) => {
-    console.log("Data",data);
+    // console.log("Data",data);
     try {
       const userCredential = await signInWithEmailAndPassword(auth, data.email, data.password);
       const userDoc = await getDoc(doc(db, 'users', userCredential.user.uid));

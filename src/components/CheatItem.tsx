@@ -19,7 +19,7 @@ function CheatItem({ item,isLoggedIn }: Props) {
   const {deleteCheatItem} = useData()
 
   const handleDeleteClick = ()=>{
-    console.log("deleting", item.id);
+    // console.log("deleting", item.id);
     setShowConfirm(true);
   }
 
@@ -27,7 +27,7 @@ function CheatItem({ item,isLoggedIn }: Props) {
   const handleConfirm = (confirm:boolean) => {
     setShowConfirm(false);
     if (confirm) {
-      console.log("DELETED")
+      // console.log("DELETED")
       deleteCheatItem(item.id)
     }
   };
