@@ -1,19 +1,14 @@
-import React, { MouseEventHandler, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import '../assets/scss/navbar-prime.scss'
 import { useAuth } from '../contexts/authContext';
 import LetterAvatar from './UI/LetterAvatar';
 import { LuChevronDown, LuChevronUp } from "react-icons/lu";
 import SelectionList from './UI/SelectionList';
 
-type Props = {}
+// dummy data
+import {dummyProjects as projects} from '../types/project'
 
-const projects = [
-  {id: '1', name: 'FanClub'},
-  {id: '2', name: 'Recoveroo Uk'},
-  {id: '3', name: 'GameHub'},
-  {id: '4', name: 'StudyQuest'},
-  {id: '5', name: 'D3 Solutions'},
-]
+type Props = {}
 
 function NavbarPrime({}: Props) {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -52,7 +47,7 @@ function NavbarPrime({}: Props) {
       <div onClick={() => setModalOpen(!isModalOpen)} className="project-selector">{project.name} &nbsp; 
        {isModalOpen ? <LuChevronUp /> : <LuChevronDown />}
       </div>
-      <SelectionList isVisible={isModalOpen} projects={projects} handleSelect={handleselectProject} />
+      <SelectionList isVisible={isModalOpen} items={projects} handleSelect={handleselectProject} />
       {!!state.user ? <LetterAvatar text={state.user?.email || "X"}/> : 'Guest'}
     </div>
   )

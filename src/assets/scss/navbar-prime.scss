@@ -11,4 +11,13 @@
     padding: 0 40px;
     justify-content: flex-end;
     position: relative;
+
+    .project-selector {
+        font-size: 1rem;
+        border: 1px solid #30363d;
+        padding: 0.5em 1em;
+        border-radius: 5px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
 }
