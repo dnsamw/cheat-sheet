@@ -70,7 +70,8 @@ body {
   }
   @media #{$xlarge-up} {
     // background: #99ff00;
-    width: 80%;
+    padding: 0 20px;
+    width: 100%;
   }
 }
 

@@ -1,0 +1,41 @@
+.sidebar {
+    background-color: #0d1017;
+    border: 1px solid #30363d;
+    border-top: none;
+    border-left: none;
+    // border-radius:0 15px 15px 0;
+    padding: 1em;
+    // margin-bottom: 1em;
+    width: 400px;
+    position: fixed;
+    top: 90px;
+    left: 0;
+    bottom: 0;
+    overflow-y: auto;
+  
+    .sidebar-item {
+      margin-bottom: 1em;
+  
+      h3 {
+        color: #fff;
+        margin-bottom: 0.5em;
+      }
+  
+      p {
+        color: #9e9e9e;
+      }
+    }
+  
+    &.hidden {
+      display: none;
+    }
+  
+    @media (max-width: 767px) {
+      width: 100%;
+      position: static;
+      margin-bottom: 2em;
+      &.hidden {
+        display: none;
+      }
+    }
+  }

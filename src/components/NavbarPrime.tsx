@@ -5,7 +5,8 @@ import LetterAvatar from "./UI/LetterAvatar";
 import { LuChevronDown, LuChevronUp } from "react-icons/lu";
 import SelectionList from "./UI/SelectionList";
 import { Config } from "../config/appConfig";
-import { LuLogIn, LuUser2, LuLogOut } from "react-icons/lu";
+import { LuLogIn, LuLogOut } from "react-icons/lu";
+import { AiFillSignature } from "react-icons/ai";
 
 // dummy data
 import { dummyProjects as projects } from "../types/project";
@@ -81,6 +82,10 @@ function NavbarPrime({}: Props) {
 
   return (
     <div className="navbar-prime">
+      <div className="left">
+      <div className="brand-logo">
+        <AiFillSignature />
+      </div>
       <div
         onClick={() => setModalOpen(!isModalOpen)}
         className="project-selector"
@@ -93,6 +98,9 @@ function NavbarPrime({}: Props) {
         items={projects}
         handleSelect={handleselectProject}
       />
+      </div>
+
+      <div className="right">
       {!!user?.email ? (
         <MemoizedLetterAvatar text={user?.email} />
       ) : (
@@ -100,9 +108,9 @@ function NavbarPrime({}: Props) {
           <LuLogIn />
         </IconLink>
       )}
-
       {role==="admin" && <IconButton onPress={handleLogout} color={Config.colors.error}><LuLogOut /></IconButton>}
-      
+    
+      </div>
     </div>
   );
 }

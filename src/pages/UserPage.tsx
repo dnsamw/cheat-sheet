@@ -13,7 +13,7 @@ function UserPage({}: Props) {
   return (
     <MainNavigatorLayout>
       <>
-        {!!state?.user ? <CheatForm /> : <div style={{marginTop: '20px'}}></div>}
+        {/* {!!state?.user ? <CheatForm /> : <div style={{marginTop: '20px'}}></div>} */}
         {items?.map((cheatItem: any) => (
           <CheatItem key={cheatItem.id} item={cheatItem} isLoggedIn={!!state?.user}/>
         ))}

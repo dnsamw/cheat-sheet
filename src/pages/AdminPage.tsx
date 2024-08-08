@@ -13,7 +13,8 @@ function AdminPage({}: Props) {
   return (
     <MainNavigatorLayout>
       <>
-        <CheatForm />
+        {/* <CheatForm /> */}
+        { <div style={{marginTop: '20px'}}></div>}
         {items?.map((cheatItem: any) => (
           <CheatItem key={cheatItem.id} item={cheatItem} isLoggedIn={true}/>
         ))}

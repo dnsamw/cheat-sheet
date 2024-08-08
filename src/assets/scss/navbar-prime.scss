@@ -1,7 +1,7 @@
 .navbar-prime{
     display: flex;
     gap: 1em;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     height: 90px;
     width: 100%;
@@ -9,8 +9,18 @@
     border-bottom: 1px solid #30363d;
     color: white;
     padding: 0 40px;
-    justify-content: flex-end;
-    position: relative;
+    position: fixed;
+    z-index: 99;
+
+    .brand-logo{
+        font-size: 2.5rem;
+    }
+
+    .left, .right{
+        display: flex;
+        gap: 1em;
+        align-items: center;
+    }
 
     .project-selector {
         font-size: 1rem;
