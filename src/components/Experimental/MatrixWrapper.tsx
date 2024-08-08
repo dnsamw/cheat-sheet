@@ -48,7 +48,6 @@ function MatrixWrapper({}: Props) {
 
       // Window resize event listener
       const handleResize = () => {
-          
           setupCanvas();
         };
         

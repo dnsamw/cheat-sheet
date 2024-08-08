@@ -11,7 +11,7 @@ export const initialState: I_ItemInitialState = {
 };
 
 const ItemReducer = (
-  state: I_ItemInitialState = initialState,
+  state: I_ItemInitialState = initialState, 
   action: ItemActionUnion
 ): I_ItemInitialState => {
   switch (action.type) {

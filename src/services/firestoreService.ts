@@ -1,12 +1,14 @@
 import { collection, getDocs, doc, addDoc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
-import {db} from "../config/firebaseConfig";
+import {db, auth} from "../config/firebaseConfig";
 import { I_CheatItem } from "../types/item";
 import { I_User } from "../types/user";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 
 const itemsCollection = collection(db, "items");
 const usersCollection = collection(db, "users");
 
+// ITEMS
 const getAllItems = async () => {
   const itemsSnapshot = await getDocs(itemsCollection);
   const itemsList = itemsSnapshot.docs.map((doc) => ({
@@ -45,7 +47,24 @@ export const deleteItem = async (id: string): Promise<void> => {
   await deleteDoc(docRef);
 };
 
+// AUTH
+export const login = async (email:string , password:string) => {
+  try {
+    return await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    // const userDoc = await getDoc(doc(db, "users", userCredential.user.uid));
+    // const userData = userDoc.data();
+  } catch (error) {
+    throw new Error("Invaqlid email or password");
+  }
+}
 
+export const logout = async () => {
+  await auth.signOut();
+};
 // USERS
 
 export const createUser = async (user: Omit<I_User, 'id'>): Promise<string> => {

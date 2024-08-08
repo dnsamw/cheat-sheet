@@ -5,6 +5,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
 import { auth, db } from "../config/firebaseConfig";
 import { useAuth } from "../contexts/authContext";
+import { AuthActionKind } from "../types/auth";
 
 const RegisterForm: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -24,7 +25,7 @@ const RegisterForm: React.FC = () => {
         email,
         role,
       });
-      dispatch({ type: "LOGIN", payload: { user: userCredential.user, role } });
+      dispatch({ type: AuthActionKind.LOGIN, payload: { user: userCredential.user, role } });
     } catch (error) {
       console.error("Registration error:", error);
     }

@@ -1,9 +1,10 @@
 // src/context/AuthContext.tsx
 import React, { createContext, useContext, useReducer, ReactNode, Dispatch, useEffect } from 'react';
-import AuthReducer, { AuthAction, AuthState, initialState } from '../reducers/authReducer';
+import AuthReducer, { initialState } from '../reducers/authReducer';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../config/firebaseConfig';
+import { AuthAction, AuthActionKind, AuthState } from '../types/auth';
 
 
 const AuthContext = createContext<{
@@ -14,19 +15,19 @@ const AuthContext = createContext<{
   dispatch: () => null,
 });
 
-
-
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(AuthReducer, initialState);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
+
       if (user) {
         const userDoc = await getDoc(doc(db, 'users', user.uid));
         const userData = userDoc.data();
-        dispatch({ type: 'LOGIN', payload: { user, role: userData?.role || 'user' } });
+        dispatch({ type: AuthActionKind.LOGIN, payload: { user, role: userData?.role || 'user' } });
+
       } else {
-        dispatch({ type: 'LOGOUT' });
+        dispatch({ type: AuthActionKind.LOGOUT });
       }
     });
 
