@@ -4,9 +4,13 @@ import { useAuth } from "../contexts/authContext";
 import LetterAvatar from "./UI/LetterAvatar";
 import { LuChevronDown, LuChevronUp } from "react-icons/lu";
 import SelectionList from "./UI/SelectionList";
+import { Config } from "../config/appConfig";
+import { LuLogIn } from "react-icons/lu";
 
 // dummy data
 import { dummyProjects as projects } from "../types/project";
+import AuthLink from "./UI/IconLink";
+import IconLink from "./UI/IconLink";
 
 const MemoizedLetterAvatar = memo(
   LetterAvatar,
@@ -65,7 +69,13 @@ function NavbarPrime({}: Props) {
         items={projects}
         handleSelect={handleselectProject}
       />
-      {!!user?.email ? <MemoizedLetterAvatar text={user?.email} /> : "Guest"}
+      {!!user?.email ? (
+        <MemoizedLetterAvatar text={user?.email} />
+      ) : (
+        <IconLink routePath={Config.routePaths.auth} color={Config.colors.primary}>
+          <LuLogIn />
+        </IconLink>
+      )}
     </div>
   );
 }

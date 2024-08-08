@@ -1,14 +1,14 @@
 import React, { useEffect, useRef } from "react";
 import "../../assets/scss/tag.scss";
+import { Config } from "../../config/appConfig";
 
 type Props = {
-  bgColor?: string;
-  color?: string;
+  color: string;
   tag: string;
   onClick?: (tag: string) => void;
 };
 
-function Tag({ bgColor, color, tag, onClick }: Props) {
+function Tag({ color, tag, onClick }: Props) {
 
   const handleClick = () => {
     if (onClick) {
@@ -18,7 +18,7 @@ function Tag({ bgColor, color, tag, onClick }: Props) {
   return (
     <li
       onClick={handleClick}
-      style={{ backgroundColor: bgColor, color: color }}
+      style={{ backgroundColor: Config.colors.getBg(color), color: color }}
     >
       {tag}
     </li>

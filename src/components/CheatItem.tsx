@@ -52,14 +52,12 @@ function CheatItem({ item,isLoggedIn }: Props) {
                     key={i}
                     tag={tagObject?.name}
                     color={tagObject?.color}
-                    bgColor={tagObject.bgColor}
                   />
                 );
               }
               return (
                 <Tag
                   key={i}
-                  bgColor={tag?.color + "3d"}
                   color={tag?.color}
                   tag={tag?.name}
                 />

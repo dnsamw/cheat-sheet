@@ -24,6 +24,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       if (user) {
         const userDoc = await getDoc(doc(db, 'users', user.uid));
         const userData = userDoc.data();
+        console.log({userData});
+        
         dispatch({ type: AuthActionKind.LOGIN, payload: { user, role: userData?.role || 'user' } });
 
       } else {
