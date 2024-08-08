@@ -82,4 +82,11 @@ export const deleteUser = async (id: string): Promise<void> => {
   await deleteDoc(docRef);
 };
 
+export const getUserbyUUID = async (uuid: string): Promise<any | null> => {
+  const docRef = doc(usersCollection, uuid);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) return docSnap.data();
+  return null;
+};
+
 export {getAllItems}

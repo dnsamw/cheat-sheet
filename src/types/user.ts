@@ -1,14 +1,13 @@
 export interface I_User {
-  id: string;
-  firstName: string;
-  lastName: string;
-  approved: string;
-  email: string;
+  uuid: string;
+  first_name: string;
+  last_name: string;
+  role: string;
+  contact_number: string;
 }
 
 export interface I_UserInitialState {
   user: I_User | null;
-  role: string | null;
   loading: boolean;
   error: string | null;
 }

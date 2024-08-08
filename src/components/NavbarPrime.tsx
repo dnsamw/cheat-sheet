@@ -5,12 +5,15 @@ import LetterAvatar from "./UI/LetterAvatar";
 import { LuChevronDown, LuChevronUp } from "react-icons/lu";
 import SelectionList from "./UI/SelectionList";
 import { Config } from "../config/appConfig";
-import { LuLogIn } from "react-icons/lu";
+import { LuLogIn, LuUser2, LuLogOut } from "react-icons/lu";
 
 // dummy data
 import { dummyProjects as projects } from "../types/project";
-import AuthLink from "./UI/IconLink";
 import IconLink from "./UI/IconLink";
+import { AuthActionKind } from "../types/auth";
+import { logout } from "../services/firestoreService";
+import { FirebaseError } from "firebase/app";
+import IconButton from "./UI/IconButton";
 
 const MemoizedLetterAvatar = memo(
   LetterAvatar,
@@ -23,9 +26,10 @@ function NavbarPrime({}: Props) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [project, setProject] = useState(projects[0]);
   const {
-    state: { user },
+    state: { user,role }, dispatch
   } = useAuth();
 
+  
   const modalRef = useRef<HTMLDivElement | null>(null);
 
   const openModal = () => setModalOpen(true);
@@ -49,6 +53,26 @@ function NavbarPrime({}: Props) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isModalOpen]);
+
+  const handleLogout = async () => {
+    // console.log("Data",data);
+    dispatch({ type: AuthActionKind.SET_LOADING, payload: true });
+    try {
+      const userCredential = await logout();
+      dispatch({
+        type: AuthActionKind.LOGOUT,
+      });
+      dispatch({ type: AuthActionKind.SET_LOADING, payload: false });
+    } catch (error: FirebaseError | any) {
+      // console.error("Login error:", error.message); 
+      dispatch({ type: AuthActionKind.SET_LOADING, payload: false });
+      dispatch({
+        type: AuthActionKind.SET_AUTH_ERROR,
+        payload: "Cannot Logout. Please try again",
+      });
+    }
+  };
+
 
   const handleselectProject = (project: any) => {
     setProject(project);
@@ -76,6 +100,9 @@ function NavbarPrime({}: Props) {
           <LuLogIn />
         </IconLink>
       )}
+
+      {role==="admin" && <IconButton onPress={handleLogout} color={Config.colors.error}><LuLogOut /></IconButton>}
+      
     </div>
   );
 }

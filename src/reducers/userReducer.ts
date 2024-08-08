@@ -6,7 +6,6 @@ import {
   
   export const initialState: I_UserInitialState = {
     user: null,
-    role: null,
     loading: false,
     error: null,
   };

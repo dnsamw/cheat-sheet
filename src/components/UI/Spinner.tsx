@@ -4,7 +4,7 @@ type Props = {}
 
 function Spinner({}: Props) {
   return (
-    <div className="loader spinner"></div>
+    <div className="spinner-loader spinner"></div>
   )
 }
 

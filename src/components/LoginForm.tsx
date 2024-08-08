@@ -10,7 +10,7 @@ import { auth, db } from "../config/firebaseConfig";
 import { AuthActionKind } from "../types/auth";
 import { FirebaseError } from "firebase/app";
 import Spinner from "./UI/Spinner";
-import { login } from "../services/firestoreService";
+import { getUserbyUUID, login } from "../services/firestoreService";
 
 type Props = {};
 
@@ -35,8 +35,7 @@ function LoginForm({}: Props) {
     dispatch({ type: AuthActionKind.SET_LOADING, payload: true });
     try {
       const userCredential = await login(data.email, data.password);
-      const userDoc = await getDoc(doc(db, "users", userCredential.user.uid));
-      const userData = userDoc.data();
+      const userData = await getUserbyUUID(userCredential.user.uid);
       dispatch({
         type: AuthActionKind.LOGIN,
         payload: { user: userCredential.user, role: userData?.role || "user" },
