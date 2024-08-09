@@ -1,3 +1,4 @@
+import { Subject } from "react-hook-form/dist/utils/createSubject";
 import { I_CheatItem } from "./types/item"
 
 const tagdata = {
@@ -8,6 +9,15 @@ const tagdata = {
     fanclub : {name:"FanClub",color:"#c9ab81"},
     jleague : {name:"J-League",color:"#c9ab81"},
 }
+
+export const subjects = [
+    { id: '1', name: 'Laravel' },
+    { id: '2', name: 'Git' },
+    { id: '3', name: 'TypeScript' },
+    { id: '4', name: 'Other' },
+    { id: '5', name: 'FanClub' },
+    { id: '6', name: 'J-League' },
+];
 
 export const cheatItems:I_CheatItem[] = [
     {
