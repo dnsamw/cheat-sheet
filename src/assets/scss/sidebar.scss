@@ -30,6 +30,25 @@
         color: #9e9e9e;
       }
     }
+
+    .sidebar-item-list {
+      display: flex;
+      gap: 1em;
+      align-items: flex-start;
+      flex-direction: column;
+      list-style: none;
+      padding: 0;
+      color: white;
+
+      a{
+        color: white;
+        text-decoration: none;
+
+        &:hover{
+          text-decoration: underline;
+        }
+      }
+    }
   }
   &.hidden {
     display: none;

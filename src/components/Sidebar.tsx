@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "../assets/scss/sidebar.scss";
 import IconButton from "./UI/IconButton";
-import { LuPlus } from "react-icons/lu";
+import { LuNewspaper, LuPencilRuler, LuPlus, LuRocket, LuStickyNote, LuTags, LuUsers } from "react-icons/lu";
 import { Config } from "../config/appConfig";
 import SubjectSelector from "./SubjectSelector";
 import { subjects } from "../data";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   const [isMobileView, setIsMobileView] = useState(false);
@@ -62,6 +63,14 @@ const Sidebar = () => {
 
       <section className="sidebar-section">
         <h3>Manage</h3>
+        <ul className="sidebar-item-list">
+          <Link to={"/projects"}><LuRocket /> Projects</Link>
+          <Link to={"/subjects"}><LuPencilRuler /> Subjects</Link>
+          <Link to={"/posts"}><LuNewspaper /> Posts</Link>
+          <Link to={"/notes"}><LuStickyNote /> Notes</Link>
+          <Link to={"/tsgs"}><LuTags /> Tags</Link>
+          <Link to={"/users"}><LuUsers /> Users</Link>
+        </ul>
       </section>
     </div>
   );
