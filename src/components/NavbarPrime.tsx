@@ -5,7 +5,7 @@ import LetterAvatar from "./UI/LetterAvatar";
 import { LuChevronDown, LuChevronUp } from "react-icons/lu";
 import SelectionList from "./UI/SelectionList";
 import { Config } from "../config/appConfig";
-import { LuLogIn, LuLogOut } from "react-icons/lu";
+import { LuLogIn, LuLogOut, LuUser, LuPowerOff } from "react-icons/lu";
 import { AiFillSignature } from "react-icons/ai";
 
 // dummy data
@@ -104,11 +104,11 @@ function NavbarPrime({}: Props) {
       {!!user?.email ? (
         <MemoizedLetterAvatar text={user?.email} />
       ) : (
-        <IconLink routePath={Config.routePaths.auth} color={Config.colors.primary}>
-          <LuLogIn />
+        <IconLink routePath={Config.routePaths.auth} color={Config.colors.white} text="Login">
+          <LuUser />
         </IconLink>
       )}
-      {role==="admin" && <IconButton onPress={handleLogout} color={Config.colors.error}><LuLogOut /></IconButton>}
+      {role==="admin" && <IconButton onPress={handleLogout} color={Config.colors.white} text="Logout"><LuPowerOff /></IconButton>}
     
       </div>
     </div>

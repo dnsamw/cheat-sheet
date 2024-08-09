@@ -13,7 +13,7 @@ function IconButton({ color, onPress, children,text }: Props) {
     <button
     className="icon-button"
       onClick={onPress}
-      style={{ color: color, backgroundColor: Config.colors.getBg(color) }}
+      style={{ color: color}}
     >
       {text} {children}
     </button>
@@ -21,3 +21,4 @@ function IconButton({ color, onPress, children,text }: Props) {
 }
 
 export default IconButton;
+ 

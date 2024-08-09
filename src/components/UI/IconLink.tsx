@@ -1,22 +1,22 @@
 import { Link } from "react-router-dom";
-
 import "../../assets/scss/auth-link.scss";
-import { Config } from "../../config/appConfig";
+
 type Props = {
   routePath: string;
   children: React.ReactNode;
   color: string;
+  text?: string;
 };
 
-function IconLink({ routePath, color, children }: Props) {
+function IconLink({ routePath, color, children,text }: Props) {
   return (
     <>
       <Link
         className="icon-link"
-        style={{ color: color, backgroundColor: Config.colors.getBg(color) }}
+        style={{ color: color}}
         to={routePath}
       >
-        {children}
+        {children}&nbsp; &nbsp;{text}
       </Link>
     </>
   );

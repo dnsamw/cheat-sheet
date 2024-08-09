@@ -4,7 +4,7 @@
   padding: 1em;
   margin-bottom: 1em;
   width: 100%;
-  // background-color: #fff;
+  position: relative;
 
   .cheat-tags{
     display: flex;
@@ -13,7 +13,23 @@
       margin: 0;padding: 0;
     }
   }
-
+  .more-options{
+    position: absolute;
+    top: 15px;
+    right: 25px;      
+    color: #707883;
+    font-size: 1.4rem;
+    margin: 0;
+    padding: 5px;
+    border-radius: 100%;
+    display: flex;
+    
+    &:hover{
+      color: white;
+      cursor: pointer;
+      background-color: #66666694;
+    }
+  }
   .cheat-title {
     font-size: 1.2rem;
     font-weight: 300;

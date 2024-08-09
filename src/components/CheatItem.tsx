@@ -4,7 +4,7 @@ import { I_CheatItem } from "../types/item";
 import { TagType } from "../types/tag";
 import "../assets/scss/cheat-item.scss";
 import { tagdata } from "./TagSelector";
-import { LuFileEdit, LuTrash2 } from "react-icons/lu";
+import { LuFileEdit, LuMoreHorizontal, LuTrash2 } from "react-icons/lu";
 import { useData } from "../hooks/useData";
 import { useState } from "react";
 import YesNoDialogModal from "./UI/YesNoDialogModal";
@@ -48,6 +48,9 @@ function CheatItem({ item, isLoggedIn }: Props) {
   return (
     <>
       <div className="cheat-item">
+        <div className="more-options">
+        <LuMoreHorizontal />
+        </div>
         <div className="cheat-title">{item.title}</div>
         <div
           className="cheat-text"

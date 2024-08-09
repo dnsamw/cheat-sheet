@@ -11,4 +11,10 @@
   align-items: center;
   gap: 5px;
   font-weight: 200;
+
+  transition: 300ms;
+
+  &:hover {
+    background-color: #30363d;
+  }
 }
