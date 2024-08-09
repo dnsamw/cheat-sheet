@@ -8,7 +8,7 @@ type Props = {
 
 function YesNoDialogModal({ message, onConfirm }: Props) {
   return (
-    <>
+    <div className="confirm-dialog-wrapper">
       <div className="confirm-dialog">
         <p className="message">{message || "Are you sure ?"}</p>
         <div className="actions">
@@ -16,7 +16,7 @@ function YesNoDialogModal({ message, onConfirm }: Props) {
         <button className="cancel" onClick={() => onConfirm(false)}>No</button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

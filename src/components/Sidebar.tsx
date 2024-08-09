@@ -6,11 +6,23 @@ import { Config } from "../config/appConfig";
 import SubjectSelector from "./SubjectSelector";
 import { subjects } from "../data";
 import { Link } from "react-router-dom";
+import { ModalTypes } from "../types/modal";
+import CreateEditArticleModal from "./Modals/CreateEditArticleModal";
+import CreateEditNoteModal from "./Modals/CreateEditNoteModal";
+import CreateEditProjectModal from "./Modals/CreateEditProjectModal";
 
 const Sidebar = () => {
   const [isMobileView, setIsMobileView] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<ModalTypes | null>(null);
 
-  console.log({ isMobileView });
+  const handleOpenModal = (modalType: ModalTypes) => {
+    setModalType(modalType);
+    setModalOpen(true);
+    console.log("isModalOpen", isModalOpen);
+    console.log("modalType", modalType);   
+  };
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobileView(window.innerWidth < 768);
@@ -24,6 +36,19 @@ const Sidebar = () => {
     };
   }, []);
 
+  const renderModal = () => {
+    switch (modalType) {
+      case ModalTypes.CREATE_EDIT_ARTICLE_MODAL:
+        return <CreateEditArticleModal onModalClose={() => setModalOpen(false)}/>;
+      case ModalTypes.CREATE_EDIT_NOTE_MODAL:
+        return <CreateEditNoteModal onModalClose={() => setModalOpen(false)}/>;
+      case ModalTypes.CREATE_EDIT_PROJECT_MODAL:
+        return <CreateEditProjectModal onModalClose={() => setModalOpen(false)} />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className={`sidebar ${false ? "hidden" : ""}`}>
       <section className="sidebar-section">
@@ -32,16 +57,16 @@ const Sidebar = () => {
           <IconButton
             text="New project"
             color={Config.colors.white}
-            onPress={() => console.log("Create Project")}
+            onPress={() => handleOpenModal(ModalTypes.CREATE_EDIT_PROJECT_MODAL)}
           >
             <LuPlus />
           </IconButton>
         </div>
         <div className="sidebar-item">
           <IconButton
-            text="New post"
+            text="New article"
             color={Config.colors.white}
-            onPress={() => console.log("Create Project")}
+            onPress={() => handleOpenModal(ModalTypes.CREATE_EDIT_ARTICLE_MODAL)}
           >
             <LuPlus />
           </IconButton>
@@ -50,7 +75,7 @@ const Sidebar = () => {
           <IconButton
             text="New note"
             color={Config.colors.white}
-            onPress={() => console.log("Create Project")}
+            onPress={() => handleOpenModal(ModalTypes.CREATE_EDIT_NOTE_MODAL)}
           >
             <LuPlus />
           </IconButton>
@@ -72,6 +97,8 @@ const Sidebar = () => {
           <Link to={"/users"}><LuUsers /> Users</Link>
         </ul>
       </section>
+      {isModalOpen && <div>{modalType}</div>}
+      {isModalOpen && renderModal()}
     </div>
   );
 };

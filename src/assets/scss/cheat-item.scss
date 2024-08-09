@@ -6,6 +6,14 @@
   width: 100%;
   // background-color: #fff;
 
+  .cheat-tags{
+    display: flex;
+
+    ul{
+      margin: 0;padding: 0;
+    }
+  }
+
   .cheat-title {
     font-size: 1.2rem;
     font-weight: 300;
@@ -24,7 +32,7 @@
   
   .cheat-actions {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     .edit-btn {
       cursor: pointer;
