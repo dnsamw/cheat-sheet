@@ -11,7 +11,8 @@
   top: 90px;
   left: 0;
   bottom: 0;
-  overflow-y: auto;
+  overflow-y: scroll;
+  position: relative;
 
   .sidebar-section {
     margin-bottom: 2em;

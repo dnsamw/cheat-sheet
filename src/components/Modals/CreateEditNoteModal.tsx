@@ -1,3 +1,4 @@
+import CheatForm from "../CheatForm";
 import BaseModal from "./BaseModal";
 
 type Props = {
@@ -7,7 +8,7 @@ type Props = {
 function CreateEditNoteModal({onModalClose}: Props) {
   return (
     <BaseModal title="Create and Edit Note"  onClose={onModalClose}>
-      <div>Create and Edit Note</div>
+      <CheatForm />
     </BaseModal>
   );
 }

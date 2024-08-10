@@ -4,25 +4,28 @@
   justify-content: center;
   gap: 5px;
   border: 1px solid #30363d;
-  font-size: 1.4rem;
-  padding: 0.9em;
-  border-radius: 5px;
+  font-size: 1rem;
+  padding: 0.5em;
+  border-radius: 15px;
   background-color: #000;
   color: #666;
   margin-bottom: 1em;
 
   span {
-    border: 1px solid #30363d;
-    padding: 0.5em;
-    border-radius: 15px;
-    margin-right: 2px;
+    background-color: #21262d;
+    color: #fff;
+    padding: 0.3em 0.5em;
+    margin: 0.2em;
+    border-radius: 10px;
     display: flex;
-    align-items: center;
-    justify-content: center;
     gap: 10px;
+    align-items: center;
+
 
     .close-btn {
       cursor: pointer;
+      overflow: hidden;
+      border-radius: 100%;
       &:hover {
         color: #ff4444;
         background-color: #ff44443d;

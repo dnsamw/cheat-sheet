@@ -12,16 +12,17 @@
   color: white;
   font-size: 1rem;
   transition: 300ms;
-
+  
   .base-modal-wrapper {
     margin-top: 90px;
-    background-color: #161b21;
+    background-color: #0f1216;
     border: 1px solid #30363d;
     border-radius: 15px;
     padding: 1em;
     width: 90%;
     height: calc(100% - 120px);
     position: relative;
+    overflow-y: scroll;
 
     .close-modal{
       position: absolute;

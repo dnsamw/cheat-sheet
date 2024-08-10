@@ -1,5 +1,5 @@
 form {
-  border: 1px solid #30363d;
+  // border: 1px solid #30363d;
   border-radius: 15px;
   padding: 1em;
   margin-top: 1em;
@@ -13,12 +13,16 @@ form {
     gap: 0.5em;
     width: 100%;
 
+    label{
+      text-align: left;
+    }
+
     input,
     textarea {
       border: 1px solid #30363d;
       font-size: 1.4rem;
       padding: 0.5em;
-      border-radius: 5px;
+      border-radius: 15px;
       background-color: #000;
       color: #666;
 

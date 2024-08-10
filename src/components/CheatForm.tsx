@@ -73,14 +73,6 @@ function CheatForm({}: Props) {
           <Alert type={AlertTypes.error} message={errors.text.message} />
         )}
       </div>
-
-      {/* <div className="input-unit">
-        <label htmlFor="code">Code</label>
-        <textarea {...register("code")} />
-        {errors.code && (
-          <Alert type={AlertTypes.error} message={errors.code.message} />
-        )}
-      </div> */}
       <div className="dynamic-input-control-unit">
         Code Snippets
       <span className="action-btn" onClick={() => append('')}><LuPlusCircle /></span>
