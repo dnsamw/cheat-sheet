@@ -50,7 +50,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className={`sidebar ${false ? "hidden" : ""}`}>
+    <div style={{width:Config.uiMeasurements.sidebarWidth}} className={`sidebar ${false ? "hidden" : ""}`}>
       <section className="sidebar-section">
         <h3>Create</h3>
         <div className="sidebar-item">

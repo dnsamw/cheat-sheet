@@ -1,0 +1,103 @@
+@import "~react-quill-new/dist/quill.snow.css";
+
+.text-editor {
+  .ql-toolbar {
+    background-color: #0d1017;
+    border: 1px solid #30363d;
+    border-radius: 15px 15px 0 0;
+
+    .ql-formats {
+      margin-right: 15px;
+    }
+
+    button {
+      &:hover {
+        color: #06c;
+      }
+    }
+  }
+
+  .ql-container {
+    border: 1px solid #30363d;
+    border-top: none;
+    border-radius: 0 0 15px 15px;
+    font-family: "Arial", sans-serif;
+  }
+
+  .ql-editor {
+    min-height: 200px;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .ql-blank {
+    &::before {
+      color: #9999993d !important;
+    }
+
+    &:focus {
+      border-color: #06c;
+    }
+  }
+}
+
+// custom toolbar
+
+.custom-quill-editor {
+  #toolbar {
+    display: flex;
+    padding: 10px;
+    background-color: #21262d;
+    border: 1px solid #30363d;
+    border-radius: 15px 15px 0 0;
+
+    select,
+    button {
+      margin-right: 10px;
+      padding: 5px;
+      border: 1px solid #30363d;
+      border-radius: 3px;
+      background-color: white;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #e6e6e6;
+      }
+    }
+  }
+}
+
+// formatted text
+
+.ql-container {
+  .ql-editor {
+    background-color: #0d1017;
+    color: #666;
+    padding: 20px;
+    border-radius: 0 0 15px 15px;
+    h1 {
+      font-size: 2em;
+      color: #333;
+    }
+
+    h2 {
+      font-size: 1.5em;
+      color: #666;
+    }
+
+    strong {
+      font-weight: 700;
+      color: #fff;
+    }
+
+    em {
+      font-style: italic;
+      color: #555;
+    }
+
+    ul,
+    ol {
+      padding-left: 20px;
+    }
+  }
+}

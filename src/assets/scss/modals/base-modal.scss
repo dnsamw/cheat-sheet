@@ -1,5 +1,5 @@
 .fixed-modal-container {
-  background-color: #0000005c;
+  background-color: #000000;
   position: fixed;
   top: 0;
   left: 0;
@@ -14,29 +14,38 @@
   transition: 300ms;
   
   .base-modal-wrapper {
-    margin-top: 90px;
+    // margin-top: 90px;
     background-color: #0f1216;
     border: 1px solid #30363d;
     border-radius: 15px;
-    padding: 1em;
+    // padding: 1em;
     width: 90%;
     height: calc(100% - 120px);
     position: relative;
     overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
 
     .close-modal{
       position: absolute;
       font-size: 1.5rem;
       top: 15px;
+      // bottom: 15px;
       right: 15px;
       cursor: pointer;
-
+      
       &:hover{
         color: #ff0000;
       }
     }
-
+    
     .modal-header{
+      background-color: #0f1216;
+      // background-color: yellowgreen;
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
       border-bottom: 1px solid #30363d;
     }
 

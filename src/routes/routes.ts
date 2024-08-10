@@ -11,13 +11,13 @@ export interface RouteInterface<T = {}> {
 
 const AuthPage = lazy(() => import("../pages/AuthPage"));
 const AdminPage = lazy(() => import("../pages/AdminPage"));
-const UserPage = lazy(() => import("../pages/UserPage"));
+const GuestPage = lazy(() => import("../pages/GuestPage"));
 
 export const authenticatedRoutes: Array<RouteInterface> = [
   { path: "/", element: AdminPage },
 ];
 
 export const unAuthenticatedRoutes: Array<RouteInterface> = [
-  { path: "/", element: UserPage },
+  { path: "/", element: GuestPage },
   { path: "/auth", element: AuthPage },
 ];

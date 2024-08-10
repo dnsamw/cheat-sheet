@@ -12,8 +12,10 @@ function BaseModal({ title,children,onClose }: Props) {
   return (
     <div className="fixed-modal-container">
       <div className="base-modal-wrapper">
+        <div className="modal-header">
         <div className="close-modal" onClick={onClose}><LuXCircle /></div>
-        <div className="modal-header"><h3>{title}</h3></div>
+          <h3>{title}</h3>
+        </div>
         <div className="modal-body">{children}</div>
         <div className="modal-footer"></div>
       </div>

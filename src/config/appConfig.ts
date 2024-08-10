@@ -56,4 +56,9 @@ export const Config = {
 
     gold: "rgb(201, 171, 129)",
   },
+
+  uiMeasurements: {
+    sidebarWidth: "300px",
+    navBarPrimeHeight: "90px",
+  }
 };

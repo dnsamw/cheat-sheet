@@ -6,6 +6,7 @@ import Alert, { AlertTypes } from "./UI/Alert";
 import { useData } from "../hooks/useData";
 import TagSelector from "./TagSelector";
 import { LuPlusCircle, LuXCircle } from "react-icons/lu";
+import PostEditorTest from "./Experimental/PostEditorTest";
 
 type Props = {};
 
@@ -66,13 +67,31 @@ function CheatForm({}: Props) {
           <Alert type={AlertTypes.error} message={errors.title.message} />
         )}
       </div>
-      <div className="input-unit">
+
+      {/* <div className="input-unit">
         <label htmlFor="text">Text</label>
         <textarea {...register("text")} />
         {errors.text && (
           <Alert type={AlertTypes.error} message={errors.text.message} />
         )}
+      </div> */}
+
+      <div className="input-unit">
+      <label htmlFor="title">Text</label>
+      <Controller
+          name="text"
+          control={control}
+          defaultValue={""}
+          render={({ field }) => (
+            <PostEditorTest value={field.value}
+                    onChange={field.onChange} />
+          )}
+        />
+        {errors.text && (
+          <Alert type={AlertTypes.error} message={errors.text.message} />
+        )}
       </div>
+
       <div className="dynamic-input-control-unit">
         Code Snippets
       <span className="action-btn" onClick={() => append('')}><LuPlusCircle /></span>

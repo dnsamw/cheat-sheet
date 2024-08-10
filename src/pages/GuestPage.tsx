@@ -6,7 +6,7 @@ import { useAuth } from "../contexts/authContext";
 
 type Props = {};
 
-function UserPage({}: Props) {
+function GuestPage({}: Props) {
   const { items, error, loading } = useData();
   const {state} = useAuth();
   return (
@@ -21,4 +21,4 @@ function UserPage({}: Props) {
   );
 }
 
-export default UserPage;
+export default GuestPage;
