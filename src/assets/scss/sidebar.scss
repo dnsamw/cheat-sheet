@@ -12,7 +12,8 @@
   left: 0;
   bottom: 0;
   overflow-y: scroll;
-  position: relative;
+  z-index: 1000;
+  // position: relative;
 
   .sidebar-section {
     margin-bottom: 2em;
