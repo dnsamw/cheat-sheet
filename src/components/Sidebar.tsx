@@ -19,8 +19,8 @@ const Sidebar = () => {
   const handleOpenModal = (modalType: ModalTypes) => {
     setModalType(modalType);
     setModalOpen(true);
-    console.log("isModalOpen", isModalOpen);
-    console.log("modalType", modalType);   
+    // console.log("isModalOpen", isModalOpen);
+    // console.log("modalType", modalType);   
   };
 
   useEffect(() => {

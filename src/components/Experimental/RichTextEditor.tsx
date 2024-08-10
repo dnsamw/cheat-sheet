@@ -48,12 +48,14 @@ interface RichTextEditorProps {
 }
 
 const RichTextEditor: React.FC<RichTextEditorProps> = ({ onChange,txtValue }) => {
-  const [value, setValue] = useState<string>('');
+  // const [value, setValue] = useState<string>(txtValue);
 
-  const handleChange = useCallback((content: string) => {
-    setValue(content);
-    onChange(content);
-  }, [onChange]);
+  // const handleChange = useCallback((content: string) => {
+
+  //   setValue(content);
+  //   onChange(content);
+
+  // }, [onChange]);
 
   const modules = {
     toolbar: {
@@ -66,9 +68,9 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ onChange,txtValue }) =>
       <CustomToolbar />
       <ReactQuill
         theme="snow"
-        value={value}
+        value={txtValue}
         placeholder='Write something...'
-        onChange={handleChange}
+        onChange={onChange}
         modules={modules}
         formats={formats}
       />

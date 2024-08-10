@@ -7,14 +7,9 @@ type Props = {
 }
 
 function PostEditorTest({onChange,value}: Props) {
-    // const [value, setValue] = useState<string>('');
-
-    const handleChange = (content: string) => {
-        onChange(content);
-    }
   return (
     <div className='quill-wrapper'>
-        <RichTextEditor txtValue={value} onChange={handleChange}/>
+        <RichTextEditor txtValue={value} onChange={onChange}/>
     </div>
   )
 }
