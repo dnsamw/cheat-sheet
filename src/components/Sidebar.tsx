@@ -6,21 +6,20 @@ import { Config } from "../config/appConfig";
 import SubjectSelector from "./SubjectSelector";
 import { subjects } from "../data";
 import { Link } from "react-router-dom";
-import { ModalTypes } from "../types/modal";
+import { ModalActionKind, ModalMethods, ModalTypes } from "../types/modal";
 import CreateEditArticleModal from "./Modals/CreateEditArticleModal";
 import CreateEditNoteModal from "./Modals/CreateEditNoteModal";
 import CreateEditProjectModal from "./Modals/CreateEditProjectModal";
+import { useModal } from "../contexts/modalContext";
 
 const Sidebar = () => {
   const [isMobileView, setIsMobileView] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState<ModalTypes | null>(null);
+  const {state:{isOpen,modal,method}, dispatch} = useModal();
 
   const handleOpenModal = (modalType: ModalTypes) => {
-    setModalType(modalType);
-    setModalOpen(true);
-    // console.log("isModalOpen", isModalOpen);
-    // console.log("modalType", modalType);   
+    dispatch({ type: ModalActionKind.OPEN, payload: {isOpen: true, modal: modalType, method: ModalMethods.CREATE } });
   };
 
   useEffect(() => {
@@ -36,14 +35,14 @@ const Sidebar = () => {
     };
   }, []);
 
-  const renderModal = () => {
+  const renderModal = (method:ModalMethods | null, modalType:ModalTypes | null) => {
     switch (modalType) {
       case ModalTypes.CREATE_EDIT_ARTICLE_MODAL:
-        return <CreateEditArticleModal onModalClose={() => setModalOpen(false)}/>;
+        return method !== null ? <CreateEditArticleModal method={method} onModalClose={() => dispatch({ type: ModalActionKind.CLOSE, payload: {isOpen: false, modal: null, method: null} })}/> : null;
       case ModalTypes.CREATE_EDIT_NOTE_MODAL:
-        return <CreateEditNoteModal onModalClose={() => setModalOpen(false)}/>;
+        return method !== null ?  <CreateEditNoteModal  method={method}  onModalClose={() => dispatch({ type: ModalActionKind.CLOSE, payload: {isOpen: false, modal: null, method: null} })}/> : null;
       case ModalTypes.CREATE_EDIT_PROJECT_MODAL:
-        return <CreateEditProjectModal onModalClose={() => setModalOpen(false)} />;
+        return method !== null ?  <CreateEditProjectModal  method={method}  onModalClose={() => dispatch({ type: ModalActionKind.CLOSE, payload: {isOpen: false, modal: null, method: null} })} /> : null;
       default:
         return null;
     }
@@ -97,8 +96,8 @@ const Sidebar = () => {
           <Link to={"/users"}><LuUsers /> Users</Link>
         </ul>
       </section>
-      {isModalOpen && <div>{modalType}</div>}
-      {isModalOpen && renderModal()}
+      {/* {isModalOpen && <div>{modalType}</div>} */}
+      {isOpen && renderModal(method, modal)}
     </div>
   );
 };

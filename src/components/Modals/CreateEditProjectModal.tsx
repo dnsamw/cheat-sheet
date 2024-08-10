@@ -1,12 +1,14 @@
+import { ModalMethods } from "../../types/modal";
 import BaseModal from "./BaseModal";
 
 type Props = {
     onModalClose: () => void
+    method: ModalMethods
 };
 
-function CreateEditProjectModal({onModalClose}: Props) {
+function CreateEditProjectModal({onModalClose,method}: Props) {
   return (
-    <BaseModal title="Create and Edit Project" onClose={onModalClose}>
+    <BaseModal method={method} titleSuffix="Project" onClose={onModalClose}>
       <div>Create and Edit Project</div>
     </BaseModal>
   );

@@ -10,6 +10,9 @@ import { useState } from "react";
 import YesNoDialogModal from "./UI/YesNoDialogModal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CreateEditNoteModal from "./Modals/CreateEditNoteModal";
+import { ModalActionKind, ModalMethods, ModalTypes } from "../types/modal";
+import { useModal } from "../contexts/modalContext";
 type Props = {
   item: I_CheatItem;
   isLoggedIn: boolean;
@@ -17,7 +20,9 @@ type Props = {
 
 function CheatItem({ item, isLoggedIn }: Props) {
   const [showConfirm, setShowConfirm] = useState(false);
+  // const [isModalOpen, setModalOpen] = useState(false);
   const { deleteCheatItem } = useData();
+  const { dispatch } = useModal();
 
   const handleDeleteClick = () => {
     // console.log("deleting", item.id);
@@ -49,9 +54,11 @@ function CheatItem({ item, isLoggedIn }: Props) {
     <>
       <div className="cheat-item">
         <div className="more-options">
-        <LuMoreHorizontal />
+          <LuMoreHorizontal />
         </div>
-        <div className="cheat-title">{item.title}</div>
+        <div className="cheat-title">
+          {item.title}
+        </div>
         <div
           className="cheat-text"
           dangerouslySetInnerHTML={{ __html: item.text }}
@@ -76,7 +83,14 @@ function CheatItem({ item, isLoggedIn }: Props) {
         </div>
         {isLoggedIn && (
           <div className="cheat-actions">
-            <span onClick={() => {}} className="edit-btn">
+            <span onClick={() => dispatch({
+              type: ModalActionKind.OPEN,
+              payload: {
+                isOpen: true,
+                modal: ModalTypes.CREATE_EDIT_NOTE_MODAL,
+                method: ModalMethods.EDIT,
+              },
+            })} className="edit-btn">
               <LuFileEdit />
             </span>
             <span onClick={handleDeleteClick} className="delete-btn">
@@ -92,6 +106,23 @@ function CheatItem({ item, isLoggedIn }: Props) {
         />
       )}
       <ToastContainer />
+      {/* {isOpen && (
+        <CreateEditNoteModal
+          method={ModalMethods.EDIT}
+          onModalClose={() =>
+            dispatch(
+              {
+                type: ModalActionKind.CLOSE,
+                payload: {
+                  isOpen: false,
+                  type: null,
+                  method: null,
+                },
+              }
+            )
+          }
+        />
+      )} */}
     </>
   );
 }
