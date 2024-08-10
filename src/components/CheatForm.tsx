@@ -7,6 +7,8 @@ import { useData } from "../hooks/useData";
 import TagSelector from "./TagSelector";
 import { LuPlusCircle, LuXCircle } from "react-icons/lu";
 import PostEditorTest from "./Experimental/PostEditorTest";
+import { useModal } from "../contexts/modalContext";
+import { ModalMethods } from "../types/modal";
 
 type Props = {};
 
@@ -21,6 +23,7 @@ type FormData = z.infer<typeof schema>;
 
 function CheatForm({}: Props) {
   const { createCheatItem,loading } = useData();
+  const {state:{item,method}} = useModal();
   const {
     register,
     handleSubmit,
@@ -116,7 +119,7 @@ function CheatForm({}: Props) {
           defaultValue={[]}
           render={({ field }) => (
             <TagSelector
-              value={field.value}
+              value={method === ModalMethods.EDIT ? item?.tags : field.value}
               onChange={field.onChange}
             />
           )}

@@ -1,3 +1,5 @@
+import { I_CheatItem } from "./item";
+
 export enum ModalTypes {
   YES_NO_DIALOG = "YES_NO_DIALOG",
   CREATE_EDIT_ARTICLE_MODAL = "CREATE_EDIT_ARTICLE_MODAL",
@@ -15,6 +17,7 @@ export type ModalState = {
   isOpen: boolean;
   modal: ModalTypes | null;
   method: ModalMethods | null;
+  item: I_CheatItem | any;
 };
 
 export enum ModalActionKind {
@@ -28,5 +31,6 @@ export type ModalAction = {
     isOpen: boolean;
     modal: ModalTypes | null;
     method: ModalMethods | null;
+    item: I_CheatItem | any;
   };
 }

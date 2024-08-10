@@ -1,18 +1,18 @@
+import { useState } from "react";
+import { LuFileEdit, LuMoreHorizontal, LuTrash2 } from "react-icons/lu";
 import Tag from "./UI/Tag";
 import CheatCode from "./CheatCode";
+import YesNoDialogModal from "./UI/YesNoDialogModal";
+import { tagdata } from "./TagSelector";
 import { I_CheatItem } from "../types/item";
 import { TagType } from "../types/tag";
-import "../assets/scss/cheat-item.scss";
-import { tagdata } from "./TagSelector";
-import { LuFileEdit, LuMoreHorizontal, LuTrash2 } from "react-icons/lu";
 import { useData } from "../hooks/useData";
-import { useState } from "react";
-import YesNoDialogModal from "./UI/YesNoDialogModal";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import CreateEditNoteModal from "./Modals/CreateEditNoteModal";
-import { ModalActionKind, ModalMethods, ModalTypes } from "../types/modal";
 import { useModal } from "../contexts/modalContext";
+import { ModalActionKind, ModalMethods, ModalTypes } from "../types/modal";
+
+import "react-toastify/dist/ReactToastify.css";
+import "../assets/scss/cheat-item.scss";
 type Props = {
   item: I_CheatItem;
   isLoggedIn: boolean;
@@ -89,6 +89,7 @@ function CheatItem({ item, isLoggedIn }: Props) {
                 isOpen: true,
                 modal: ModalTypes.CREATE_EDIT_NOTE_MODAL,
                 method: ModalMethods.EDIT,
+                item:item,
               },
             })} className="edit-btn">
               <LuFileEdit />
@@ -106,23 +107,6 @@ function CheatItem({ item, isLoggedIn }: Props) {
         />
       )}
       <ToastContainer />
-      {/* {isOpen && (
-        <CreateEditNoteModal
-          method={ModalMethods.EDIT}
-          onModalClose={() =>
-            dispatch(
-              {
-                type: ModalActionKind.CLOSE,
-                payload: {
-                  isOpen: false,
-                  type: null,
-                  method: null,
-                },
-              }
-            )
-          }
-        />
-      )} */}
     </>
   );
 }
