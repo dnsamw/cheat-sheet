@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect } from "react";
 import { ItemContext } from "../contexts/itemContext";
 import { I_CheatItem, ItemActionKind } from "../types/item";
-import { createItem, deleteItem, getAllItems,getItemById } from "../services/firestoreService";
+import { createItem, deleteItem, getAllItems,getItemById, updateItem } from "../services/firestoreService";
 
 export const useData = () => {
   const context = useContext(ItemContext);
@@ -59,14 +59,35 @@ export const useData = () => {
   const createCheatItem = useCallback(async (item: Omit<I_CheatItem, 'id'>) => {
     try {
       dispatch({ type: ItemActionKind.CREATE_ITEM_REQUEST });
+      
       const id = await createItem(item);
       dispatch({
         type: ItemActionKind.CREATE_ITEM_SUCCESS,
         payload: { id, ...item },
+        
       });
     } catch (error) {
       dispatch({
         type: ItemActionKind.CREATE_ITEM_FAILURE,
+        payload:
+          error instanceof Error
+            ? error.message
+            : "An unknown error occurred",
+      });
+    }
+  }, [dispatch]);
+
+  const updateCheatItem = useCallback(async (item:I_CheatItem) => {
+    try {
+      dispatch({ type: ItemActionKind.UPDATE_ITEM_REQUEST });
+      await updateItem(item.id, item);
+      dispatch({
+        type: ItemActionKind.UPDATE_ITEM_SUCCESS,
+        payload: item,
+      });
+    } catch (error) {
+      dispatch({
+        type: ItemActionKind.UPDATE_ITEM_FAILURE,
         payload:
           error instanceof Error
             ? error.message
@@ -100,6 +121,7 @@ export const useData = () => {
     loading: state.loading,
     getCheatItemById,
     createCheatItem,
+    updateCheatItem,
     deleteCheatItem,
   };
 };

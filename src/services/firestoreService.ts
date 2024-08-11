@@ -33,11 +33,13 @@ export const getItemById = async (id: string) => {
 };
 
 export const createItem = async (item: Omit<I_CheatItem, 'id'>): Promise<string> => {
+  console.log("CREATING FIREBASE SERVICE",item);
   const docRef = await addDoc(itemsCollection, item);
   return docRef.id;
 };
 
 export const updateItem = async (id: string, item: Partial<I_CheatItem>): Promise<void> => {
+  console.log("UPDATING FIREBASE SERVICE",item, id);
   const docRef = doc(itemsCollection, id);
   await updateDoc(docRef, item);
 };

@@ -8,8 +8,10 @@ import { LuPlusCircle, LuXCircle } from "react-icons/lu";
 import PostEditorTest from "./Experimental/PostEditorTest";
 import { useModal } from "../contexts/modalContext";
 import { ModalMethods } from "../types/modal";
+import { useItem } from "../contexts/itemContext";
 
 import "../assets/scss/cheat-form.scss";
+
 
 type Props = {};
 
@@ -23,7 +25,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 function CheatForm({}: Props) {
-  const { createCheatItem,loading } = useData();
+  const { createCheatItem, updateCheatItem,loading } = useData();
   const {state:{item,method}} = useModal();
   const {
     register,
@@ -32,11 +34,13 @@ function CheatForm({}: Props) {
     formState: { errors },
     reset
   } = useForm<FormData>({ resolver: zodResolver(schema),defaultValues: {
-    title: item.title || '',
-    text: item.text || '',
-    codes: item.codes || [],
-    tags: item.tags || [],
+    title: item?.title || '',
+    text: item?.text || '',
+    codes: item?.codes || ["enter code here"],
+    tags: item?.tags || [],
   }, });
+
+  const {dispatch} = useItem();
 
   const { fields, append, remove } = useFieldArray({
     control: control as Control<FormData>,
@@ -45,17 +49,37 @@ function CheatForm({}: Props) {
   });
 
   // console.log({fields},);
-  
 
   const onSubmit = async (data: FieldValues) => {
+    switch (method) {
+      case ModalMethods.EDIT:
+        return await updateCheatItem({
+          id: item?.id,
+          title: data.title,
+          text: data.text,
+          codes: data.codes,
+          tags: data.tags,
+        });
+        break;
+      case ModalMethods.CREATE:
+        return await createCheatItem({
+          title: data.title,
+          text: data.text,
+          codes: data.codes,
+          tags: data.tags,
+        });
+        break;
+      default:
+        break;
+    }
+
     console.log(data);
-    await createCheatItem({
-      title: data.title,
-      text: data.text === "'<p><br></p>'" ? "" : data.text,
-      // codes: ["npm start", data.code],
-      codes: data.codes,
-      tags: data.tags,
-    });
+    // await createCheatItem({
+    //   title: data.title,
+    //   text: data.text === "<p><br></p>" ? "" : data.text,
+    //   codes: data.codes,
+    //   tags: data.tags,
+    // });
     reset();
   };
 
@@ -71,14 +95,6 @@ function CheatForm({}: Props) {
           <Alert type={AlertTypes.error} message={errors.title.message} />
         )}
       </div>
-
-      {/* <div className="input-unit">
-        <label htmlFor="text">Text</label>
-        <textarea {...register("text")} />
-        {errors.text && (
-          <Alert type={AlertTypes.error} message={errors.text.message} />
-        )}
-      </div> */}
 
       <div className="input-unit">
       <label htmlFor="title">Text</label>
