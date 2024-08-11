@@ -1,14 +1,19 @@
 import "../App.css";
 import { useData } from "../hooks/useData";
-import Loading from "../components/UI/Loading";
 import CheatItem from "../components/CheatItem";
 import MainNavigatorLayout from "../layouts/MainNavigatorLayout";
-import PostEditorTest from "../components/Experimental/PostEditorTest";
+import { useEffect } from "react";
 
 type Props = {};
 
-function AdminPage({}: Props) {
+const AdminPage = ({}: Props) => {
   const { items, error, loading } = useData();
+  useEffect(() => {
+    console.log("AdminPage mounted");
+    return () => {
+      console.log("AdminPage unmounted");
+    }
+  }, [])
   return (
     <MainNavigatorLayout>
       <>

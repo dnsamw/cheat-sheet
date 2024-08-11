@@ -12,6 +12,7 @@
   color: white;
   font-size: 1rem;
   transition: 300ms;
+  padding-top: 70px;
   
   .base-modal-wrapper {
     // margin-top: 90px;
@@ -20,7 +21,7 @@
     border-radius: 15px;
     // padding: 1em;
     width: 90%;
-    height: calc(100% - 120px);
+    height: calc(100% - 80px);
     position: relative;
     overflow-y: scroll;
     display: flex;

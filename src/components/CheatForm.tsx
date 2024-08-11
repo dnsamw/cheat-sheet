@@ -11,6 +11,7 @@ import { ModalMethods } from "../types/modal";
 
 import "../assets/scss/cheat-form.scss";
 import Spinner from "./UI/Spinner";
+import { useEffect } from "react";
 
 
 type Props = {};
@@ -72,6 +73,12 @@ function CheatForm({}: Props) {
         break;
     }
   };
+  useEffect(() => {
+    console.log("CHEAT FORM mounted");
+    return () => {
+      console.log("CHEAT FORM unmounted");
+    }
+  }, [])
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

@@ -8,7 +8,7 @@ export const initialState: ModalState = {
 };
 
 const ModalReducer = (state: ModalState, action: ModalAction): ModalState => {
-  console.log("modalReducer", action);
+  // console.log("modalReducer", action);
   
   switch (action.type) {
     case ModalActionKind.OPEN:
