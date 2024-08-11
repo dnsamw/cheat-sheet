@@ -1,4 +1,3 @@
-import "../assets/scss/cheat-form.scss";
 import { useForm, FieldValues, Controller, useFieldArray, Control } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,6 +8,8 @@ import { LuPlusCircle, LuXCircle } from "react-icons/lu";
 import PostEditorTest from "./Experimental/PostEditorTest";
 import { useModal } from "../contexts/modalContext";
 import { ModalMethods } from "../types/modal";
+
+import "../assets/scss/cheat-form.scss";
 
 type Props = {};
 
@@ -31,10 +32,10 @@ function CheatForm({}: Props) {
     formState: { errors },
     reset
   } = useForm<FormData>({ resolver: zodResolver(schema),defaultValues: {
-    title: '',
-    text: '',
-    codes: [''],
-    tags: [],
+    title: item.title || '',
+    text: item.text || '',
+    codes: item.codes || [],
+    tags: item.tags || [],
   }, });
 
   const { fields, append, remove } = useFieldArray({
@@ -119,7 +120,7 @@ function CheatForm({}: Props) {
           defaultValue={[]}
           render={({ field }) => (
             <TagSelector
-              value={method === ModalMethods.EDIT ? item?.tags : field.value}
+              value={field.value}
               onChange={field.onChange}
             />
           )}
