@@ -1,3 +1,5 @@
+@import "./animations/transitions.scss";
+
 form {
   // border: 1px solid #30363d;
   border-radius: 15px;
@@ -12,9 +14,21 @@ form {
     flex-direction: column;
     gap: 0.5em;
     width: 100%;
+    position: relative;
 
     label{
       text-align: left;
+    }
+
+    .code{
+      padding-right: 2em;
+    }
+    .code-close-btn{
+      font-size: 1.3rem;
+      position: absolute;
+      right: 15px;
+      top: 50px;
+      cursor: pointer;
     }
 
     input,
@@ -64,5 +78,31 @@ form {
         font-size: 1.1rem;
         align-self: flex-end;
       }
+  }
+
+  //animation
+  &.four {
+    z-index:0;
+    transform:scale(1);
+    .modal-background {
+      background:rgba(0,0,0,.7);
+      .modal {
+        animation: blowUpModal .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+      }
+    }
+    + .content {
+      z-index:1;
+      animation:blowUpContent .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+    }
+    &.out {
+      .modal-background {
+        .modal {
+          animation: blowUpModalTwo .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+        }
+      }
+      + .content {
+        animation: blowUpContentTwo .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+      }
+    }
   }
 }
