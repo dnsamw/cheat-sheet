@@ -13,12 +13,12 @@ import Spinner from "./UI/Spinner";
 import TagSelector from "./TagSelector";
 import Alert, { AlertTypes } from "./UI/Alert";
 import PostEditorTest from "./Experimental/PostEditorTest";
-import { useData } from "../hooks/useData";
 import { LuPlusCircle, LuXCircle } from "react-icons/lu";
 import { useModal } from "../contexts/modalContext";
 import { ModalMethods } from "../types/modal";
 
 import "../assets/scss/cheat-form.scss";
+import { useDataOperations } from "../hooks/useDataOperations";
 
 type Props = {};
 
@@ -34,7 +34,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 function CheatForm({}: Props) {
-  const { createCheatItem, updateCheatItem, loading } = useData();
+  const { createCheatItem, updateCheatItem, loading } = useDataOperations();
   const {
     state: { item, method },
   } = useModal();
@@ -86,12 +86,12 @@ function CheatForm({}: Props) {
         break;
     }
   };
-  useEffect(() => {
-    console.log("CHEAT FORM mounted");
-    return () => {
-      console.log("CHEAT FORM unmounted");
-    };
-  }, []);
+  // useEffect(() => {
+  //   console.log("CHEAT FORM mounted");
+  //   return () => {
+  //     console.log("CHEAT FORM unmounted");
+  //   };
+  // }, []);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="four">
@@ -137,7 +137,7 @@ function CheatForm({}: Props) {
       ))}
 
       <div className="dynamic-input-control-unit">
-      Code Snippets
+        Code Snippets
         <span className="action-btn" onClick={() => append("")}>
           <LuPlusCircle />
         </span>
