@@ -8,9 +8,9 @@ import { LuPlusCircle, LuXCircle } from "react-icons/lu";
 import PostEditorTest from "./Experimental/PostEditorTest";
 import { useModal } from "../contexts/modalContext";
 import { ModalMethods } from "../types/modal";
-import { useItem } from "../contexts/itemContext";
 
 import "../assets/scss/cheat-form.scss";
+import Spinner from "./UI/Spinner";
 
 
 type Props = {};
@@ -40,8 +40,6 @@ function CheatForm({}: Props) {
     tags: item?.tags || [],
   }, });
 
-  const {dispatch} = useItem();
-
   const { fields, append, remove } = useFieldArray({
     control: control as Control<FormData>,
     // @ts-ignore
@@ -53,34 +51,26 @@ function CheatForm({}: Props) {
   const onSubmit = async (data: FieldValues) => {
     switch (method) {
       case ModalMethods.EDIT:
-        return await updateCheatItem({
+        await updateCheatItem({
           id: item?.id,
           title: data.title,
           text: data.text,
           codes: data.codes,
           tags: data.tags,
         });
-        break;
+        break
       case ModalMethods.CREATE:
-        return await createCheatItem({
+        await createCheatItem({
           title: data.title,
           text: data.text,
           codes: data.codes,
           tags: data.tags,
         });
+        reset();
         break;
       default:
         break;
     }
-
-    console.log(data);
-    // await createCheatItem({
-    //   title: data.title,
-    //   text: data.text === "<p><br></p>" ? "" : data.text,
-    //   codes: data.codes,
-    //   tags: data.tags,
-    // });
-    reset();
   };
 
   return (
@@ -146,7 +136,7 @@ function CheatForm({}: Props) {
         )}
       </div>
       <div className="input-unit">
-        <button>Save</button>
+        <button disabled={loading}>{loading ? <Spinner /> : "Save"}</button>
       </div>
     </form>
   );

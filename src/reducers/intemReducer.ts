@@ -46,6 +46,20 @@ const ItemReducer = (
       case ItemActionKind.CREATE_ITEM_FAILURE:
         return { ...state, loading: false, error: action.payload };
 
+      //Updating an Item
+      case ItemActionKind.UPDATE_ITEM_REQUEST:
+        return { ...state, loading: true, error: null };
+      case ItemActionKind.UPDATE_ITEM_SUCCESS:
+        return {
+          ...state,
+          loading: false,
+          items: state.items.map((item) =>
+            item.id === action.payload.id ? action.payload : item
+          ),
+        };
+      case ItemActionKind.UPDATE_ITEM_FAILURE:
+        return { ...state, loading: false, error: action.payload };
+
       //Deleting an Item
       case ItemActionKind.DELETE_ITEM_REQUEST:
         return { ...state, loading: true, error: null };

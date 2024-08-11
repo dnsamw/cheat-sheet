@@ -22,8 +22,6 @@ import { useModal } from "../contexts/modalContext";
 
 const Sidebar = () => {
   const [isMobileView, setIsMobileView] = useState(false);
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [modalType, setModalType] = useState<ModalTypes | null>(null);
   const {
     state: { isOpen, modal, method },
     dispatch,

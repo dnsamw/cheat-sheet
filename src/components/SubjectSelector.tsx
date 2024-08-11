@@ -24,9 +24,9 @@ const SubjectSelector: React.FC<SubjectSelectorProps> = ({ subjects, onChange })
     setFilteredSubjects(subjects);
   }, [subjects]);
 
-  useEffect(() => {
-    onChange(selectedSubjects);
-  }, [selectedSubjects, onChange]);
+  // useEffect(() => {
+  //   onChange(selectedSubjects);
+  // }, [onChange]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -76,6 +76,7 @@ const SubjectSelector: React.FC<SubjectSelectorProps> = ({ subjects, onChange })
         ))}
         <input
           ref={inputRef}
+          name='subject'
           type="text"
           value={inputValue}
           onChange={handleInputChange}

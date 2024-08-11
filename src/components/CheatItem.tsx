@@ -38,6 +38,8 @@ function CheatItem({ item, isLoggedIn }: Props) {
   };
 
   const handleSuccess = () => {
+    // console.log("copied");
+    
     toast.success("Copied to clipboard!", {
       position: "bottom-right",
       autoClose: 1000,
