@@ -34,9 +34,9 @@ type FormData = z.infer<typeof schema>;
 
 function CheatForm({}: Props) {
   const { createCheatItem, updateCheatItem, loading } = useDataOperations();
-  const {
-    state: { item, method },
-  } = useModal();
+  const { state: { item, method },} = useModal();
+  console.log({item});
+  
   const {
     register,
     handleSubmit,

@@ -1,3 +1,4 @@
+import { Timestamp } from "firebase/firestore";
 import { TagType } from "./tag";
 
 export interface I_CheatItem {
@@ -6,6 +7,8 @@ export interface I_CheatItem {
   text: string;
   codes: string[];
   tags: TagType[];
+  createdAt?: Timestamp;
+  updatedAt?: Timestamp;
 }
 
 export interface I_ItemInitialState {

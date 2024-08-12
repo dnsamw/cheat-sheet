@@ -1,8 +1,16 @@
+import { Timestamp } from 'firebase/firestore';
 import '../../assets/scss/item-info.scss'
 
-type Props = {}
+type Props = {
+  timestamp?: Timestamp
+}
 
-function ItemInfo({}: Props) {
+function ItemInfo({timestamp}: Props) {
+  const getTimestamp = () => {
+    if (timestamp) {
+      return new Date(timestamp.seconds*1000).toLocaleDateString() + ` @ ${new Date(timestamp.seconds*1000).toLocaleTimeString()}`;
+    }
+  }
   return (
     <div className='item-info'>
         <div className="img-container">
@@ -10,7 +18,7 @@ function ItemInfo({}: Props) {
         </div>
         <div className="info-container">
           <p className='username'>dnsam</p>
-          <p className='date'>2024-08-11 @ 1:00 PM</p>
+          <p className='date'>{getTimestamp() || "__:__:__"}</p>
         </div>
     </div>
   )

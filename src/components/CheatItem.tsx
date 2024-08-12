@@ -102,7 +102,7 @@ function CheatItem({ item, isLoggedIn }: Props) {
             </span>
           </div>
         )}
-        <ItemInfo />
+        <ItemInfo timestamp={item.updatedAt ? item.updatedAt : item.createdAt} />
       </div>
       {showConfirm && (
         <YesNoDialogModal

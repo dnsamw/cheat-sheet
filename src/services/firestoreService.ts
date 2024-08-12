@@ -1,4 +1,4 @@
-import { collection, getDocs, doc, addDoc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
+import { collection, getDocs, doc, addDoc, getDoc, updateDoc, deleteDoc,serverTimestamp } from "firebase/firestore";
 import {db, auth} from "../config/firebaseConfig";
 import { I_CheatItem } from "../types/item";
 import { I_User } from "../types/user";
@@ -16,7 +16,9 @@ const getAllItems = async () => {
     title:doc.data().title,
     text:doc.data().text,
     codes:doc.data().codes,
-    tags:doc.data().tags
+    tags:doc.data().tags,
+    createdAt:doc.data().createdAt,
+    updatedAt:doc.data().updatedAt
   }));
   return itemsList;
 };
@@ -34,14 +36,14 @@ export const getItemById = async (id: string) => {
 
 export const createItem = async (item: Omit<I_CheatItem, 'id'>): Promise<string> => {
   console.log("CREATING FIREBASE SERVICE",item);
-  const docRef = await addDoc(itemsCollection, item);
+  const docRef = await addDoc(itemsCollection, {...item, createdAt: serverTimestamp(),updatedAt: serverTimestamp()});
   return docRef.id;
 };
 
 export const updateItem = async (id: string, item: Partial<I_CheatItem>): Promise<void> => {
   console.log("UPDATING FIREBASE SERVICE",item, id);
   const docRef = doc(itemsCollection, id);
-  await updateDoc(docRef, item);
+  await updateDoc(docRef, {...item,updatedAt: serverTimestamp()});
 };
 
 export const deleteItem = async (id: string): Promise<void> => {

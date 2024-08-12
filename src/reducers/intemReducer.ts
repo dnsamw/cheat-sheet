@@ -1,3 +1,4 @@
+import { Timestamp } from "firebase/firestore";
 import {
   I_ItemInitialState,
   ItemActionKind,
@@ -38,10 +39,16 @@ const ItemReducer = (
       case ItemActionKind.CREATE_ITEM_REQUEST:
         return { ...state, loading: true, error: null };
       case ItemActionKind.CREATE_ITEM_SUCCESS:
+        
+        const data1 = {
+          ... action.payload,
+          createdAt: Timestamp.now(),
+        }
+
         return {
           ...state,
           loading: false,
-          items: [...state.items, action.payload],
+          items: [...state.items,data1],
         };
       case ItemActionKind.CREATE_ITEM_FAILURE:
         return { ...state, loading: false, error: action.payload };
@@ -50,11 +57,15 @@ const ItemReducer = (
       case ItemActionKind.UPDATE_ITEM_REQUEST:
         return { ...state, loading: true, error: null };
       case ItemActionKind.UPDATE_ITEM_SUCCESS:
+        const data2 = {
+          ... action.payload,
+          createdAt: Timestamp.now(),
+        }
         return {
           ...state,
           loading: false,
           items: state.items.map((item) =>
-            item.id === action.payload.id ? action.payload : item
+            item.id === action.payload.id ? data2 : item
           ),
         };
       case ItemActionKind.UPDATE_ITEM_FAILURE:
