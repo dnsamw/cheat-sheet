@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import {
   useForm,
   FieldValues,
@@ -86,12 +85,6 @@ function CheatForm({}: Props) {
         break;
     }
   };
-  // useEffect(() => {
-  //   console.log("CHEAT FORM mounted");
-  //   return () => {
-  //     console.log("CHEAT FORM unmounted");
-  //   };
-  // }, []);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="four">

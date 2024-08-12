@@ -1,4 +1,5 @@
 import { ModalMethods } from "../../types/modal";
+import ArticleForm from "../ArticleForm";
 import BaseModal from "./BaseModal";
 
 type Props = {
@@ -11,7 +12,7 @@ function CreateEditArticleModal({onModalClose,method}: Props) {
   return (
     <>
       <BaseModal method={method} titleSuffix="Article" onClose={onModalClose}>
-        <div></div>
+       <ArticleForm />
       </BaseModal>
     </>
   );

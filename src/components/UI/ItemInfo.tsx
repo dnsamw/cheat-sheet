@@ -9,9 +9,8 @@ function ItemInfo({}: Props) {
         <img src="/dnsam.jpg" alt="dnsam"/>
         </div>
         <div className="info-container">
-        <p>dnsam</p>
-        <p>2024-08-11</p>
-        <p>1:00 PM</p>
+          <p className='username'>dnsam</p>
+          <p className='date'>2024-08-11 @ 1:00 PM</p>
         </div>
     </div>
   )

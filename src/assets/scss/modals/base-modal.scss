@@ -11,7 +11,7 @@
   z-index: 9999;
   color: white;
   font-size: 1rem;
-  transition: 300ms;
+  // transition: 300ms;
   padding-top: 70px;
   
   .base-modal-wrapper {
@@ -53,6 +53,7 @@
 
     .modal-body{
         padding: 15px;
+        min-height: 82%;
     }
   }
 }

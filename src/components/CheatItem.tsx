@@ -6,13 +6,14 @@ import YesNoDialogModal from "./UI/YesNoDialogModal";
 import { tagdata } from "./TagSelector";
 import { I_CheatItem } from "../types/item";
 import { TagType } from "../types/tag";
-// import { useData } from "../hooks/useData";
+import {useDataOperations} from "../hooks/useDataOperations";
 import { ToastContainer, toast } from "react-toastify";
 import { useModal } from "../contexts/modalContext";
 import { ModalActionKind, ModalMethods, ModalTypes } from "../types/modal";
 
 import "react-toastify/dist/ReactToastify.css";
 import "../assets/scss/cheat-item.scss";
+import ItemInfo from "./UI/ItemInfo";
 type Props = {
   item: I_CheatItem;
   isLoggedIn: boolean;
@@ -21,7 +22,7 @@ type Props = {
 function CheatItem({ item, isLoggedIn }: Props) {
   const [showConfirm, setShowConfirm] = useState(false);
   // const [isModalOpen, setModalOpen] = useState(false);
-  // const { deleteCheatItem } = useData();
+  const { deleteCheatItem } = useDataOperations();
   const { dispatch } = useModal();
 
   const handleDeleteClick = () => {
@@ -32,8 +33,8 @@ function CheatItem({ item, isLoggedIn }: Props) {
   const handleConfirm = (confirm: boolean) => {
     setShowConfirm(false);
     if (confirm) {
-      console.log("DELETED")
-      // deleteCheatItem(item.id);
+      // console.log("DELETED")
+      deleteCheatItem(item.id);
     }
   };
 
@@ -101,6 +102,7 @@ function CheatItem({ item, isLoggedIn }: Props) {
             </span>
           </div>
         )}
+        <ItemInfo />
       </div>
       {showConfirm && (
         <YesNoDialogModal
