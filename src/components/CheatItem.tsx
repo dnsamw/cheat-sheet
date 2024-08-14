@@ -14,6 +14,8 @@ import { ModalActionKind, ModalMethods, ModalTypes } from "../types/modal";
 import "react-toastify/dist/ReactToastify.css";
 import "../assets/scss/cheat-item.scss";
 import ItemInfo from "./UI/ItemInfo";
+import { useAuth } from "../contexts/authContext";
+import IconDropdownList from "./UI/IconDropdownList";
 type Props = {
   item: I_CheatItem;
   isLoggedIn: boolean;
@@ -21,9 +23,14 @@ type Props = {
 
 function CheatItem({ item, isLoggedIn }: Props) {
   const [showConfirm, setShowConfirm] = useState(false);
+  const [showMoreOptions, setShowMoreOptions] = useState(false);
   // const [isModalOpen, setModalOpen] = useState(false);
   const { deleteCheatItem } = useDataOperations();
   const { dispatch } = useModal();
+  // const {state:{user}} = useAuth();
+
+  // console.log("user",user);
+  
 
   const handleDeleteClick = () => {
     // console.log("deleting", item.id);
@@ -56,9 +63,14 @@ function CheatItem({ item, isLoggedIn }: Props) {
   return (
     <>
       <div className="cheat-item">
-        <div className="more-options">
-          <LuMoreHorizontal />
+
+        <div style={{position: "relative"}}>
+          <div className="more-options" onClick={() => setShowMoreOptions(!showMoreOptions)}>
+          <LuMoreHorizontal/>
+          </div>
+          <IconDropdownList isActive={showMoreOptions}/>
         </div>
+
         <div className="cheat-title">
           {item.title}
         </div>
