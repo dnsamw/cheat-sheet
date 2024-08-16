@@ -79,6 +79,18 @@ form {
 
     
   }
+
+  .article99{
+    height: 100% !important;
+
+
+    .text-editor{
+      height: 100% !important;
+      .quill {
+        height: 90% !important;
+      }
+    } 
+  }
   .dynamic-input-control-unit {
     display: flex;
     justify-content: center;

@@ -96,6 +96,7 @@ import {
             <Alert type={AlertTypes.error} message={errors.title.message} />
           )}
         </div>
+
         <div className="col-2-wrapper">
             <div className="left">
                 <div className="article-input-unit">
@@ -105,7 +106,7 @@ import {
                 </div>
             </div>
             <div className="right">
-                <div className="article-input-unit">
+                <div className="article-input-unit article99">
                 <Controller
                     name="text"
                     control={control}
