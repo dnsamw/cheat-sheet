@@ -11,25 +11,29 @@ form {
     display: flex;
     width: 100%;
     gap: 1em;
-    background-color: #30363d;
+    // background-color: #30363d;
     height: 90%;
     position: relative;
 
     .right{
-        width: 85%;
+      width: 15%;
     }
-
+    
     .left{
-        width: 15%;
+      width: 85%;
     }
   }
 
   .article-input-unit {
-    margin-bottom:1em;
+    margin-bottom:0.5em;
     display: flex;
     flex-direction: column;
     gap: 0.5em;
     width: 100%;
+
+    p{
+      margin: 0;
+    }
 
     label{
       text-align: left;
@@ -76,8 +80,11 @@ form {
         cursor: pointer;
       }
     }
+  }
 
-    
+  .actions{
+    align-content: flex-end;
+    flex-wrap: wrap;
   }
 
   .article99{

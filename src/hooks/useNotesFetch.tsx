@@ -22,6 +22,8 @@ export const useNotesFetch = () => {
             payload: items,
           });
         } catch (error) {
+          console.log("Context",{error});
+          
           dispatch({
             type: ItemActionKind.FETCH_ITEMS_FAILURE,
             payload:

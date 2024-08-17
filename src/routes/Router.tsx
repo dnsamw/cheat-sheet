@@ -6,8 +6,8 @@ import { useAuth } from "../contexts/authContext";
 import AdminPage from "../pages/AdminPage";
 
 function Router() {
-  const { state } = useAuth();  
-  const isUserLoggedIn = !!state?.user;
+  // const { state } = useAuth();  
+  // const isUserLoggedIn = !!state?.user;
 
   return (
     <BrowserRouter>

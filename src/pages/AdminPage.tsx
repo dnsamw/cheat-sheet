@@ -8,6 +8,10 @@ type Props = {};
 
 const AdminPage = ({}: Props) => {
   const { items, error, loading } = useNotesFetch();
+  console.log({loading});
+  
+  console.log({error});
+  
   // console.log("ITEMS", items);
 
   // useEffect(() => {
