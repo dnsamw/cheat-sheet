@@ -70,8 +70,10 @@ const SubjectSelector: React.FC<SubjectSelectorProps> = ({ subjects, onChange })
       <div className="input-container" onClick={() => inputRef.current?.focus()}>
         {selectedSubjects.map(subject => (
           <span key={subject.id} className="subject-tag">
+            <span>
             {subject.name}
-            <button onClick={() => handleRemoveSubject(subject)}><LuX /></button>
+            </span>
+            <span onClick={() => handleRemoveSubject(subject)}><LuX /></span>
           </span>
         ))}
         <input
