@@ -1,4 +1,4 @@
-import { collection, getDocs, doc, addDoc, getDoc, updateDoc, deleteDoc,serverTimestamp } from "firebase/firestore";
+import { collection, getDocs, doc, addDoc, getDoc, updateDoc, deleteDoc,serverTimestamp, query, where } from "firebase/firestore";
 import {db, auth} from "../config/firebaseConfig";
 import { I_CheatItem } from "../types/item";
 import { I_User } from "../types/user";
@@ -8,25 +8,47 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 const itemsCollection = collection(db, "items");
 const usersCollection = collection(db, "users");
 
-// ITEMS
+//Notes
+export const getAllNotes = async () => {
+  const q = query(itemsCollection, where("type", "==", "note"));
+  const notesSnapshot = await getDocs(q);
+  
+  const notesList = notesSnapshot.docs.map((doc) => ({
+    id: doc.id,
+    type: doc.data().type,
+    title: doc.data().title,
+    text: doc.data().text,
+    codes: doc.data().codes,
+    tags: doc.data().tags,
+    createdAt: doc.data().createdAt,
+    updatedAt: doc.data().updatedAt,
+  }));
+
+  return notesList;
+};
+
+// get all items
 const getAllItems = async () => {
   const itemsSnapshot = await getDocs(itemsCollection);
   const itemsList = itemsSnapshot.docs.map((doc) => ({
     id: doc.id,
+    type:doc.data().type,
     title:doc.data().title,
     text:doc.data().text,
     codes:doc.data().codes,
     tags:doc.data().tags,
     createdAt:doc.data().createdAt,
     updatedAt:doc.data().updatedAt
-  }));
+  }));  
   return itemsList;
 };
 
 export const getItemById = async (id: string) => {
   const docRef = doc(itemsCollection, id);
   const docSnap = await getDoc(docRef);
-  if (docSnap.exists()) return { id: docSnap.id, 
+  if (docSnap.exists()) return { 
+    id: docSnap.id, 
+    type:docSnap.data().type,
     title:docSnap.data().title, 
     text:docSnap.data().text, 
     codes:docSnap.data().codes, 

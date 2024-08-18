@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
+import { CACHE_EXPIRATION } from "../reducers/intemReducer";
 export {};
 
 export const getLightshotImageHtml = async (path: string) => {
@@ -20,4 +21,9 @@ export const getLightshotImageHtml = async (path: string) => {
 export const extractLightShotImgShortId = (url: string) => {
   const urlParts = url.split("prnt.sc");
   return urlParts[urlParts.length - 1];
+};
+
+export const isCacheValid = (lastFetched: number | null) => {
+  if (!lastFetched) return false;
+  return Date.now() - lastFetched < CACHE_EXPIRATION;
 };

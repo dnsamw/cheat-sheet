@@ -5,6 +5,9 @@ import {
   ItemActionUnion,
 } from "../types/item";
 
+export const ITEMS_CACHE_KEY = 'items_cache';
+export const CACHE_EXPIRATION = 1000 * 60 * 60; // 1 hour
+
 export const initialState: I_ItemInitialState = {
   items: [],
   loading: false,
@@ -23,11 +26,24 @@ const ItemReducer = (
         loading: true,
       };
     case ItemActionKind.FETCH_ITEMS_SUCCESS:
-      return {
+      // create new state for caching
+      const newState = {
         ...state,
         items: action.payload,
         loading: false,
+        lastFetched: Date.now(),
       };
+
+      // Cache the new state
+      localStorage.setItem(ITEMS_CACHE_KEY, JSON.stringify(newState));
+      return newState;
+
+      // return {
+      //   ...state,
+      //   items: action.payload,
+      //   loading: false,
+      // };
+
     case ItemActionKind.FETCH_ITEMS_FAILURE:
       return {
         ...state,
