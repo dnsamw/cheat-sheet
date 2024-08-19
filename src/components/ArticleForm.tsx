@@ -21,15 +21,23 @@ import SubjectSelector from "./SubjectSelector";
 import { subjects } from "../data";
 import PostThumbPlaceholder from "./UI/PostThumbPlaceholder";
 
+import { dummyProjects, I_Project, dummyProjects as projects } from "../types/project";
+import DropdownSelectionList from "./UI/DropdownSelectionList";
+
 type Props = {};
 
 const schema = z.object({
   title: z.string().min(1),
-  text: z.string().min(1),
-  codes: z
-    .array(z.string().min(1))
-    .min(1, "At least one code snippet is required"),
-  tags: z.array(z.string()).min(1, "Select at least one tag"),
+  body: z.string().min(1),
+  // codes: z
+  //   .array(z.string().min(1))
+  //   .min(1, "At least one code snippet is required"),
+  tags: z.array(
+    z.object({
+      id: z.string(),
+      name: z.string()
+    })
+  ).min(1, "Select at least one tag"),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -49,8 +57,8 @@ function ArticleForm({}: Props) {
     resolver: zodResolver(schema),
     defaultValues: {
       title: item?.title || "",
-      text: item?.text || "",
-      codes: item?.codes || ["enter code here"],
+      body: item?.body || "",
+      // codes: item?.codes || ["enter code here"],
       tags: item?.tags || [],
     },
   });
@@ -64,75 +72,92 @@ function ArticleForm({}: Props) {
   // console.log({fields},);
 
   const onSubmit = async (data: FieldValues) => {
-    switch (method) {
-      case ModalMethods.EDIT:
-        await updateCheatItem({
-          id: item?.id,
-          title: data.title,
-          text: data.text,
-          codes: data.codes,
-          tags: data.tags,
-        });
-        break;
-      case ModalMethods.CREATE:
-        await createCheatItem({
-          title: data.title,
-          text: data.text,
-          codes: data.codes,
-          tags: data.tags,
-        });
-        reset();
-        break;
-      default:
-        break;
-    }
+    console.log(data);
+    
+    // switch (method) {
+    //   case ModalMethods.EDIT:
+    //     await updateCheatItem({
+    //       id: item?.id,
+    //       title: data.title,
+    //       body: data.body,
+    //       codes: data.codes,
+    //       tags: data.tags,
+    //     });
+    //     break;
+    //   case ModalMethods.CREATE:
+    //     await createCheatItem({
+    //       title: data.title,
+    //       body: data.body,
+    //       codes: data.codes,
+    //       tags: data.tags,
+    //     });
+    //     reset();
+    //     break;
+    //   default:
+    //     break;
+    // }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
        <div className="article-input-unit actions">
-        <button disabled={loading}>{loading ? <Spinner /> : "Save"}</button>
-      </div>
-      <div className="article-input-unit">
-        <label htmlFor="title">Title</label>
-        <div></div>
-        <input type="text" {...register("title")} />
-        {errors.title && (
-          <Alert type={AlertTypes.error} message={errors.title.message} />
-        )}
+        <button type="submit" disabled={loading}>{loading ? <Spinner /> : "Save"}</button>
       </div>
 
       <div className="col-2-wrapper">
 
-      <div className="left">
-          <div className="article-input-unit article99">
-            <Controller
-              name="text"
-              control={control}
-              defaultValue={""}
-              render={({ field }) => (
-                <PostEditorTest value={field.value} onChange={field.onChange} />
+        <div className="left">
+
+        <div className="article-input-unit">
+        {/* <label htmlFor="title">Title</label> */}
+        {/* <div></div> */}
+        <input type="body" {...register("title")} placeholder="Enter the article title.."/>
+        {errors.title && (
+          <Alert type={AlertTypes.error} message={errors.title.message} />
+        )}
+      </div>
+          
+            <div className="article-input-unit article99">
+              <Controller
+                name="body"
+                control={control}
+                defaultValue={""}
+                render={({ field }) => (
+                  <PostEditorTest value={field.value} onChange={field.onChange} />
+                )}
+              />
+              {errors.body && (
+                <Alert type={AlertTypes.error} message={errors.body.message} />
               )}
-            />
-            {errors.text && (
-              <Alert type={AlertTypes.error} message={errors.text.message} />
-            )}
-          </div>
+            </div>
         </div>
 
         <div className="right">
           <div className="article-input-unit">
-            <p>Select Project</p>
-            <SubjectSelector subjects={subjects} onChange={console.log} />
+            {/* <p>Select Tags</p> */}
+            <Controller
+                name="tags"
+                control={control}
+                defaultValue={[]}
+                render={({ field }) => (
+            <SubjectSelector subjects={subjects} onChange={field.onChange} />
+                )} />
+                {errors.tags && (
+                <Alert type={AlertTypes.error} message={errors.tags.message} />
+              )}
           </div>
+
           <div className="article-input-unit">
-            <p>Select Subjects</p>
-            <SubjectSelector subjects={subjects} onChange={console.log} />
+            {/* <p>Select Project</p> */}
+            <DropdownSelectionList items={dummyProjects}/>
+            {/* <SubjectSelector subjects={subjects} onChange={console.log} /> */}
           </div>
+
           <div className="article-input-unit">
             <PostThumbPlaceholder />
           </div>
         </div>
+
       </div>
     </form>
   );

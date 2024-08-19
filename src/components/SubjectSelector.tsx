@@ -25,7 +25,8 @@ const SubjectSelector: React.FC<SubjectSelectorProps> = ({ subjects, onChange })
   }, [subjects]);
 
   // useEffect(() => {
-  //   onChange(selectedSubjects);
+  //   console.log("filtered ", filteredSubjects);
+    
   // }, [onChange]);
 
   useEffect(() => {
@@ -55,14 +56,19 @@ const SubjectSelector: React.FC<SubjectSelectorProps> = ({ subjects, onChange })
   const handleSubjectSelect = (subject: Subject) => {
     if (!selectedSubjects.some(s => s.id === subject.id)) {
       setSelectedSubjects([...selectedSubjects, subject]);
+      onChange([...selectedSubjects, subject]);
     }
     setInputValue('');
-    setFilteredSubjects(subjects);
+    setFilteredSubjects(subjects=>subjects.filter(s => s.id !== subject.id));
     inputRef.current?.focus();
   };
 
   const handleRemoveSubject = (subject: Subject) => {
+    setFilteredSubjects([...filteredSubjects, subject]);
     setSelectedSubjects(selectedSubjects.filter(s => s.id !== subject.id));
+    onChange(selectedSubjects.filter(s => s.id !== subject.id));
+    console.log("selectedse", selectedSubjects);
+    
   };
 
   return (
@@ -78,6 +84,7 @@ const SubjectSelector: React.FC<SubjectSelectorProps> = ({ subjects, onChange })
         ))}
         <input
           ref={inputRef}
+          autoComplete="off"
           name='subject'
           type="text"
           value={inputValue}

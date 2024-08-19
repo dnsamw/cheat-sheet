@@ -5,11 +5,12 @@ import LetterAvatar from "./UI/LetterAvatar";
 import { LuChevronDown, LuChevronUp } from "react-icons/lu";
 import SelectionList from "./UI/SelectionList";
 import { Config } from "../config/appConfig";
-import { LuLogIn, LuLogOut, LuUser, LuPowerOff } from "react-icons/lu";
+import { LuUser, LuPowerOff } from "react-icons/lu";
 import { AiFillSignature } from "react-icons/ai";
+import Logo from "../dev-hub.svg"
 
 // dummy data
-import { dummyProjects as projects } from "../types/project";
+import { I_Project, dummyProjects as projects } from "../types/project";
 import IconLink from "./UI/IconLink";
 import { AuthActionKind } from "../types/auth";
 import { logout } from "../services/firestoreService";
@@ -84,8 +85,9 @@ function NavbarPrime({}: Props) {
     <div className="navbar-prime">
       <div className="left">
       <div className="brand-logo">
-        <AiFillSignature />
+      {Logo ? <img src={Logo} alt="logo" /> : <AiFillSignature />}
       </div>
+     
       <div
         onClick={() => setModalOpen(!isModalOpen)}
         className="project-selector"
@@ -95,7 +97,7 @@ function NavbarPrime({}: Props) {
       </div>
       <SelectionList
         isVisible={isModalOpen}
-        items={projects}
+        items={projects as I_Project[]}
         handleSelect={handleselectProject}
       />
       </div>
