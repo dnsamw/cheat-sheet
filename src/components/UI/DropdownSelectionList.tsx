@@ -3,12 +3,14 @@ import SelectionList from "./SelectionList";
 import { LuChevronDown, LuChevronUp } from "react-icons/lu";
 import "../../assets/scss/dropdown-selection-list.scss";
 import { I_Project } from "../../types/project";
+import { onChange } from "react-toastify/dist/core/store";
 
 type Props = {
   items: I_Project[];
+  onChange: (item: I_Project) => void;
 };
 
-function DropdownSelectionList({ items }: Props) {
+function DropdownSelectionList({ items,onChange }: Props) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<{ name: string }>(items[0]);
 
@@ -36,6 +38,7 @@ function DropdownSelectionList({ items }: Props) {
 
   const handleselectItem = (project: any) => {
     setSelectedItem(project);
+    onChange(project);
     setModalOpen(false);
   };
 

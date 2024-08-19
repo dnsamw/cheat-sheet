@@ -11,7 +11,6 @@ import { z } from "zod";
 import Spinner from "./UI/Spinner";
 import Alert, { AlertTypes } from "./UI/Alert";
 import PostEditorTest from "./Experimental/PostEditorTest";
-import { LuPlusCircle, LuXCircle } from "react-icons/lu";
 import { useModal } from "../contexts/modalContext";
 import { ModalMethods } from "../types/modal";
 import { useDataOperations } from "../hooks/useDataOperations";
@@ -21,32 +20,43 @@ import SubjectSelector from "./SubjectSelector";
 import { subjects } from "../data";
 import PostThumbPlaceholder from "./UI/PostThumbPlaceholder";
 
-import { dummyProjects, I_Project, dummyProjects as projects } from "../types/project";
+import { dummyProjects, dummyProjects as projects } from "../types/project";
 import DropdownSelectionList from "./UI/DropdownSelectionList";
 
 type Props = {};
 
+const lightshotUrlRegex = /^https:\/\/prnt\.sc\/[a-zA-Z0-9]/;
+
 const schema = z.object({
   title: z.string().min(1),
   body: z.string().min(1),
-  // codes: z
-  //   .array(z.string().min(1))
-  //   .min(1, "At least one code snippet is required"),
-  tags: z.array(
-    z.object({
+  thumbnailUrl: z.string().optional().refine((val) => {
+    if (val === undefined || val === '') return true;
+    return lightshotUrlRegex.test(val);
+  }, {
+    message: "Only Lightshot short URLs are allowed.",
+  }),
+  project: z
+    .object({
       id: z.string(),
-      name: z.string()
+      name: z.string(),
     })
-  ).min(1, "Select at least one tag"),
+    .required(),
+  tags: z
+    .array(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+      })
+    )
+    .min(1, "Select at least one tag"),
 });
 
 type FormData = z.infer<typeof schema>;
 
 function ArticleForm({}: Props) {
   const { createCheatItem, updateCheatItem, loading } = useDataOperations();
-  const {
-    state: { item, method },
-  } = useModal();
+  const {state: { item, method },dispatch } = useModal();
   const {
     register,
     handleSubmit,
@@ -73,7 +83,7 @@ function ArticleForm({}: Props) {
 
   const onSubmit = async (data: FieldValues) => {
     console.log(data);
-    
+
     // switch (method) {
     //   case ModalMethods.EDIT:
     //     await updateCheatItem({
@@ -100,64 +110,94 @@ function ArticleForm({}: Props) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-       <div className="article-input-unit actions">
-        <button type="submit" disabled={loading}>{loading ? <Spinner /> : "Save"}</button>
+      <div className="article-input-unit actions">
+        <button type="submit" disabled={loading}>
+          {loading ? <Spinner /> : "Save"}
+        </button>
       </div>
 
       <div className="col-2-wrapper">
-
         <div className="left">
+          <div className="article-input-unit">
+            {/* <label htmlFor="title">Title</label> */}
+            {/* <div></div> */}
+            <input
+              type="body"
+              {...register("title")}
+              placeholder="Enter the article title.."
+            />
+            {errors.title && (
+              <Alert type={AlertTypes.error} message={errors.title.message} />
+            )}
+          </div>
 
-        <div className="article-input-unit">
-        {/* <label htmlFor="title">Title</label> */}
-        {/* <div></div> */}
-        <input type="body" {...register("title")} placeholder="Enter the article title.."/>
-        {errors.title && (
-          <Alert type={AlertTypes.error} message={errors.title.message} />
-        )}
-      </div>
-          
-            <div className="article-input-unit article99">
-              <Controller
-                name="body"
-                control={control}
-                defaultValue={""}
-                render={({ field }) => (
-                  <PostEditorTest value={field.value} onChange={field.onChange} />
-                )}
-              />
-              {errors.body && (
-                <Alert type={AlertTypes.error} message={errors.body.message} />
+          <div className="article-input-unit article99">
+            <Controller
+              name="body"
+              control={control}
+              defaultValue={""}
+              render={({ field }) => (
+                <PostEditorTest value={field.value} onChange={field.onChange} />
               )}
-            </div>
+            />
+            {errors.body && (
+              <Alert type={AlertTypes.error} message={errors.body.message} />
+            )}
+          </div>
         </div>
 
         <div className="right">
           <div className="article-input-unit">
             {/* <p>Select Tags</p> */}
             <Controller
-                name="tags"
-                control={control}
-                defaultValue={[]}
-                render={({ field }) => (
-            <SubjectSelector subjects={subjects} onChange={field.onChange} />
-                )} />
-                {errors.tags && (
-                <Alert type={AlertTypes.error} message={errors.tags.message} />
+              name="tags"
+              control={control}
+              defaultValue={[]}
+              render={({ field }) => (
+                <SubjectSelector
+                  subjects={subjects}
+                  onChange={field.onChange}
+                />
               )}
+            />
+            {errors.tags && (
+              <Alert type={AlertTypes.error} message={errors.tags.message} />
+            )}
           </div>
 
           <div className="article-input-unit">
             {/* <p>Select Project</p> */}
-            <DropdownSelectionList items={dummyProjects}/>
-            {/* <SubjectSelector subjects={subjects} onChange={console.log} /> */}
+
+            <Controller
+              name="project"
+              control={control}
+              defaultValue={{ id: "", name: "Select Project" }}
+              render={({ field }) => (
+                <DropdownSelectionList
+                  items={dummyProjects}
+                  onChange={field.onChange}
+                />
+              )}
+            />
+            {errors.project && (
+              <Alert type={AlertTypes.error} message={errors.project.message} />
+            )}
           </div>
 
           <div className="article-input-unit">
-            <PostThumbPlaceholder />
+          <Controller
+              name="thumbnailUrl"
+              control={control}
+              defaultValue={""}
+              render={({ field }) => (
+            <PostThumbPlaceholder onChange={field.onChange}/>
+              )}
+            />
+            {errors.thumbnailUrl && (
+              <Alert type={AlertTypes.error} message={errors.thumbnailUrl.message} />
+            )}
           </div>
         </div>
-
       </div>
     </form>
   );

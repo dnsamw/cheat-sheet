@@ -2,11 +2,11 @@ form {
   // border: 1px solid #30363d;
   border-radius: 15px;
   padding: 1em;
-  margin:0;
+  margin: 0;
   color: #666;
   height: 100%;
 
-  .col-2-wrapper{
+  .col-2-wrapper {
     display: flex;
     width: 100%;
     gap: 1em;
@@ -14,35 +14,38 @@ form {
     height: 80%;
     position: relative;
 
-    .right{
+    .right {
       width: 15%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
-    
-    .left{
+
+    .left {
       width: 85%;
     }
   }
 
   .article-input-unit {
-    margin-bottom:0.5em;
+    margin-bottom: 0.5em;
     display: flex;
     flex-direction: column;
     gap: 0.5em;
     width: 100%;
 
-    p{
+    p {
       margin: 0;
       text-align: left;
     }
 
-    label{
+    label {
       text-align: left;
     }
 
-    .code{
+    .code {
       padding-right: 2em;
     }
-    .code-close-btn{
+    .code-close-btn {
       font-size: 1.3rem;
       position: absolute;
       right: 15px;
@@ -82,21 +85,20 @@ form {
     }
   }
 
-  .actions{
+  .actions {
     align-content: flex-end;
     flex-wrap: wrap;
   }
 
-  .article99{
+  .article99 {
     height: 100% !important;
 
-
-    .text-editor{
+    .text-editor {
       height: 100% !important;
       .quill {
         height: 90% !important;
       }
-    } 
+    }
   }
   .dynamic-input-control-unit {
     display: flex;
@@ -107,10 +109,10 @@ form {
     width: 100%;
 
     .action-btn {
-        cursor: pointer;
-        color: #4ec656;
-        font-size: 1.1rem;
-        align-self: flex-end;
-      }
+      cursor: pointer;
+      color: #4ec656;
+      font-size: 1.1rem;
+      align-self: flex-end;
+    }
   }
 }
