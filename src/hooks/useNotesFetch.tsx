@@ -1,7 +1,9 @@
 import { useContext, useEffect } from "react";
 import { ItemContext } from "../contexts/itemContext";
-import { getAllItems } from "../services/firestoreService";
+import { getAllNotes } from "../services/firestoreService";
 import { ItemActionKind } from "../types/item";
+import { ITEMS_CACHE_KEY } from "../reducers/intemReducer";
+import { isCacheValid } from "../utils";
 
 export const useNotesFetch = () => {
   const context = useContext(ItemContext);
@@ -15,13 +17,25 @@ export const useNotesFetch = () => {
      
       const fetchNotes = async () => {
         try {
+          const cachedData = localStorage.getItem(ITEMS_CACHE_KEY);
+
+          if (cachedData) {
+            const parsedData = JSON.parse(cachedData);
+            if (isCacheValid(parsedData.lastFetched)) {
+              dispatch({ type: ItemActionKind.FETCH_ITEMS_SUCCESS, payload: parsedData.items });
+              return;
+            }
+          }
+
           dispatch({ type: ItemActionKind.FETCH_ITEMS_REQUEST });
-          const items = await getAllItems();
+          const items = await getAllNotes();
           dispatch({
             type: ItemActionKind.FETCH_ITEMS_SUCCESS,
             payload: items,
           });
         } catch (error) {
+          console.log("Context",{error});
+          
           dispatch({
             type: ItemActionKind.FETCH_ITEMS_FAILURE,
             payload:

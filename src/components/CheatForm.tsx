@@ -70,6 +70,7 @@ function CheatForm({}: Props) {
           text: data.text,
           codes: data.codes,
           tags: data.tags,
+          type:"note",
         });
         break;
       case ModalMethods.CREATE:
@@ -78,6 +79,7 @@ function CheatForm({}: Props) {
           text: data.text,
           codes: data.codes,
           tags: data.tags,
+          type:"note",
         });
         reset();
         break;

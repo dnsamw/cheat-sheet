@@ -1,31 +1,29 @@
 import '../../assets/scss/selection-list.scss'
+import { I_Project } from '../../types/project';
 
-interface ListItem {
-  id: string;
-  name: string;
-}
+type ItemType = I_Project;
 
-type Props<T extends ListItem> = {
+type Props<T extends ItemType> = {
   isVisible: boolean;
   items: T[];
   handleSelect: (item: T) => void;
 }
 
-function SelectionList<T extends ListItem>({isVisible, items, handleSelect}: Props<T>) {
+function SelectionList<T extends ItemType>({ isVisible, items, handleSelect }: Props<T>) {
   return (
     <>
       {isVisible && (
-        <div className="selection-list">
+        <ul className="selection-list">
           {items.map(item => (
-            <div 
-              className='list-item' 
-              key={item.id} 
+            <li
+              key={item.id}
+              className="selection-list__item"
               onClick={() => handleSelect(item)}
             >
               {item.name}
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       )}
     </>
   )

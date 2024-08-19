@@ -72,6 +72,7 @@ function CheatItem({ item, isLoggedIn }: Props) {
         </div>
 
         <div className="cheat-title">
+          <p style={{ color: "#00bcd4", fontSize: "15px" }}>Type : {item.type}</p>
           {item.title}
         </div>
         <div

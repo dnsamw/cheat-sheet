@@ -2,8 +2,7 @@ form {
   // border: 1px solid #30363d;
   border-radius: 15px;
   padding: 1em;
-  margin-top: 1em;
-  margin-bottom: 1em;
+  margin:0;
   color: #666;
   height: 100%;
 
@@ -11,25 +10,30 @@ form {
     display: flex;
     width: 100%;
     gap: 1em;
-    background-color: #30363d;
-    height: 90%;
+    // background-color: #30363d;
+    height: 80%;
     position: relative;
 
     .right{
-        width: 85%;
+      width: 15%;
     }
-
+    
     .left{
-        width: 15%;
+      width: 85%;
     }
   }
 
   .article-input-unit {
-    margin-bottom:1em;
+    margin-bottom:0.5em;
     display: flex;
     flex-direction: column;
     gap: 0.5em;
     width: 100%;
+
+    p{
+      margin: 0;
+      text-align: left;
+    }
 
     label{
       text-align: left;
@@ -76,8 +80,23 @@ form {
         cursor: pointer;
       }
     }
+  }
 
-    
+  .actions{
+    align-content: flex-end;
+    flex-wrap: wrap;
+  }
+
+  .article99{
+    height: 100% !important;
+
+
+    .text-editor{
+      height: 100% !important;
+      .quill {
+        height: 90% !important;
+      }
+    } 
   }
   .dynamic-input-control-unit {
     display: flex;

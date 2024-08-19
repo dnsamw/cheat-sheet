@@ -9,6 +9,7 @@ export interface I_CheatItem {
   tags: TagType[];
   createdAt?: Timestamp;
   updatedAt?: Timestamp;
+  type?: "note" | "article" | "project";
 }
 
 export interface I_ItemInitialState {

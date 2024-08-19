@@ -1,22 +1,26 @@
 .selection-list {
+
   position: absolute;
-  top: 70px;
-  left: 40px;
+  top: 35px;
+  right:0;
   width: 100%;
-  background-color: #000;
   border: 1px solid #30363d;
-  border-radius: 10px;
+  border-radius: 15px;
   display: flex;
   flex-direction: column;
   background-color: #000;
   width: 200px;
   overflow: hidden;
+  margin: 0;
+  padding: 0;
 
-  .list-item {
+  .selection-list__item {
     font-size: 1rem;
+    list-style: none;
     cursor: pointer;
     padding: 10px 0;
     border-bottom: 1px solid #30363d;
+    margin: 0;
     &:hover {
       background-color: #30363d;
     }
