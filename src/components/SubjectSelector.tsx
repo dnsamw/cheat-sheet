@@ -56,7 +56,7 @@ const SubjectSelector: React.FC<SubjectSelectorProps> = ({ subjects, onChange })
   const handleSubjectSelect = (subject: Subject) => {
     if (!selectedSubjects.some(s => s.id === subject.id)) {
       setSelectedSubjects([...selectedSubjects, subject]);
-      onChange([...selectedSubjects, subject]);
+      // onChange([...selectedSubjects, subject]);
     }
     setInputValue('');
     setFilteredSubjects(subjects=>subjects.filter(s => s.id !== subject.id));

@@ -22,7 +22,7 @@ function PostThumbPlaceholder({ imgUrl, onChange }: Props) {
     const schema = z.string().regex(lightshotUrlRegex);
 
     const result = schema.safeParse(url);
-    console.log("result", result);
+
     
     return result.success; 
   };
@@ -35,7 +35,7 @@ function PostThumbPlaceholder({ imgUrl, onChange }: Props) {
         setThumbUrl(newThumbUrl);
       }
     };
-    console.log("is valida url", validateUrl(inputValue));
+    // console.log("is valida url", validateUrl(inputValue));
     
     // if the url is valid, fetch the image
     if (validateUrl(inputValue)) {      
