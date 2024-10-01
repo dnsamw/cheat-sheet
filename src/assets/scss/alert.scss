@@ -1,22 +1,24 @@
+@import 'variables';
+
 .error{
-    color: #ff0000;
-    background-color: #ff000017;
+    color: $brightRed;
+    background-color: $alertBgBlack;
     margin-right: 0.5em;
     padding: 0.25em 0.5em;
     border-radius: 5px;
     font-size: 1rem;
 }
 .success{
-    color: #4ec656;
-    background-color: #4ec65617;
+    color: $btnGreen;
+    background-color: $alertBgBlack;
     margin-right: 0.5em;
     padding: 0.25em 0.5em;
     border-radius: 5px;
     font-size: 1rem;
 }
 .warn{
-    color: #daa520;
-    background-color: #daa52017;
+    color: $btnYellow;
+    background-color: $alertBgBlack;
     margin-right: 0.5em;
     padding: 0.25em 0.5em;
     border-radius: 5px;
