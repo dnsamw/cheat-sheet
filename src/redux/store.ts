@@ -10,19 +10,13 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import encryptTransform from "redux-persist-transform-encrypt";
 import rootReducer from "./rootReducer";
-import { Config } from "../Config";
+import { useDispatch } from "react-redux";
 
 const persistConfig = {
   key: "root",
   storage,
-  whiteList: ["auth", "items"],
-  transform: [
-    encryptTransform({
-      secretKey: Config.reduxPersistEncryptKey,
-    }),
-  ],
+  whitelist: ["auth,items"],
 };
 
 const store = configureStore({
@@ -33,14 +27,16 @@ const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
-  devTools: process.env.NODE_ENV !== "production",
+  devTools: true,
 });
 
-const persistor = persistStore(store)
+const persistor = persistStore(store);
 
-export {rootReducer, store, persistor}
+export { rootReducer, store, persistor };
 
-export type Store = typeof store
+// Rest of the code remains the same
+
+export type Store = typeof store;
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppThunk<ReturnType = void> = ThunkAction<
@@ -49,3 +45,5 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string>
 >;
+
+export const useAppDispatch = () => useDispatch<AppDispatch>();

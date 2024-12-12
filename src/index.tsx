@@ -7,18 +7,26 @@ import { ItemProvider } from "./contexts/itemContext";
 import { AuthProvider } from "./contexts/authContext";
 import { ModalProvider } from "./contexts/modalContext";
 
+import { store, persistor } from "./redux/store";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <AuthProvider>
-      <ItemProvider>
-        <ModalProvider>
-        <App />
-        </ModalProvider>
-      </ItemProvider>
-    </AuthProvider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <AuthProvider>
+          <ItemProvider>
+            <ModalProvider>
+              <App />
+            </ModalProvider>
+          </ItemProvider>
+        </AuthProvider>
+      </PersistGate>
+    </Provider>
   </React.StrictMode>
 );
 

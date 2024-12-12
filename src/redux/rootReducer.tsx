@@ -1,8 +1,8 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
-import encryptTransform from "redux-persist-transform-encrypt";
 
-import { Config } from "../Config";
+import auth from "./auth/authSlice";
+import items from "./items/itemsSlice";
 
 export interface RootState {
   auth: any;
@@ -12,17 +12,12 @@ export interface RootState {
 const authConfig = {
   key: "auth",
   storage,
-  whitelist: ["user", "role", "loading", "authError"],
-  transform: [
-    encryptTransform({
-      secretKey: Config.reduxPersistEncryptKey,
-    }),
-  ],
+  whitelist: ["authUser"],
 };
 
 const rootReducer = combineReducers({
-    // auth,
-    // items
+    auth,
+    items
 })
 
 export default rootReducer;
