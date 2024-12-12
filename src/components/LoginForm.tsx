@@ -11,6 +11,8 @@ import { AuthActionKind } from "../types/auth";
 import { FirebaseError } from "firebase/app";
 import Spinner from "./UI/Spinner";
 import { getUserbyUUID, login } from "../services/firestoreService";
+import { useAppDispatch } from "../redux/store";
+import { getUserCredentials } from "../redux/auth/authActions";
 
 type Props = {};
 
@@ -23,6 +25,8 @@ type FormData = z.infer<typeof schema>;
 
 function LoginForm({}: Props) {
   const { state:{authError,loading}, dispatch } = useAuth();
+
+  const dispatchX = useAppDispatch();
   
   const {
     register,
@@ -36,6 +40,10 @@ function LoginForm({}: Props) {
     try {
       const userCredential = await login(data.email, data.password);
       const userData = await getUserbyUUID(userCredential.user.uid);
+
+      // integration-test
+      dispatchX(getUserCredentials(data)).unwrap();
+
       dispatch({
         type: AuthActionKind.LOGIN,
         payload: { user: userCredential.user, role: userData?.role || "user" },
