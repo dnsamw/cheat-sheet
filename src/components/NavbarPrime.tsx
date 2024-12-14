@@ -15,6 +15,8 @@ import { logout } from "../services/firestoreService";
 import { FirebaseError } from "firebase/app";
 import IconButton from "./UI/IconButton";
 import DropdownSelectionList from "./UI/DropdownSelectionList";
+import { useAppDispatch } from "../redux/store";
+import { clearAuthUser } from "../redux/auth/authSlice";
 
 const MemoizedLetterAvatar = memo(
   LetterAvatar,
@@ -29,14 +31,20 @@ function NavbarPrime({}: Props) {
     dispatch,
   } = useAuth();
 
+
+  const dispatchX = useAppDispatch();
+
   const handleLogout = async () => {
     // console.log("Data",data);
     dispatch({ type: AuthActionKind.SET_LOADING, payload: true });
     try {
-      const userCredential = await logout();
+      await logout();
       dispatch({
         type: AuthActionKind.LOGOUT,
       });
+
+      dispatchX(clearAuthUser());
+
       dispatch({ type: AuthActionKind.SET_LOADING, payload: false });
     } catch (error: FirebaseError | any) {
       // console.error("Login error:", error.message);

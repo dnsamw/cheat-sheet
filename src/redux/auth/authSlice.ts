@@ -8,7 +8,7 @@ interface AuthSlice {
 }
 
 const initialState: AuthSlice = {
-  loading: true,
+  loading: false,
   authUser: null,
   authError: "",
 };

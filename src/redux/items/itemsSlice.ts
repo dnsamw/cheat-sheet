@@ -7,7 +7,7 @@ interface ItemsSlice {
 }
 
 const initialState: ItemsSlice = {
-  loading: true,
+  loading: false,
   items: [],
   itemsError: "",
 };
@@ -20,7 +20,9 @@ const itemsSlice = createSlice({
       state.loading = action.payload;
     },
   },
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    
+  },
 });
 
 export const { setLoading } = itemsSlice.actions;
