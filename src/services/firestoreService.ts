@@ -1,4 +1,4 @@
-import { collection, getDocs, doc, addDoc, getDoc, updateDoc, deleteDoc,serverTimestamp, query, where } from "firebase/firestore";
+import { collection, getDocs, doc, addDoc, getDoc, updateDoc, deleteDoc,serverTimestamp, query, where, orderBy, limit, startAfter } from "firebase/firestore";
 import {db, auth} from "../config/firebaseConfig";
 import { I_CheatItem } from "../types/item";
 import { I_User } from "../types/user";
@@ -28,7 +28,7 @@ export const getAllNotes = async () => {
 };
 
 // get all items
-const getAllItems = async () => {
+export const getAllItems = async () => {
   const itemsSnapshot = await getDocs(itemsCollection);
   const itemsList = itemsSnapshot.docs.map((doc) => ({
     id: doc.id,
@@ -115,4 +115,72 @@ export const getUserbyUUID = async (uuid: string): Promise<any | null> => {
   return null;
 };
 
-export {getAllItems}
+
+
+// pagination
+// Function to get initial page of items
+export const getFirstPage = async (pageSize = 10) => {
+  const itemsCollection = collection(db, "items");
+  
+  // Order by creation time and limit the number of items
+  const q = query(
+    itemsCollection, 
+    orderBy('createdAt', 'desc'), 
+    limit(pageSize)
+  );
+  
+  const itemsSnapshot = await getDocs(q);
+  
+  // Get the last document for future pagination
+  const lastVisible = itemsSnapshot.docs[itemsSnapshot.docs.length - 1];
+  
+  const itemsList = itemsSnapshot.docs.map((doc) => ({
+    id: doc.id,
+    type: doc.data().type,
+    title: doc.data().title,
+    text: doc.data().text,
+    codes: doc.data().codes,
+    tags: doc.data().tags,
+    createdAt: doc.data().createdAt,
+    updatedAt: doc.data().updatedAt
+  }));
+  
+  return {
+    items: itemsList,
+    lastVisible
+  };
+};
+
+
+// Function to get next page of items
+export const getNextPage = async (lastVisible:any, pageSize = 10) => {
+  const itemsCollection = collection(db, "items");
+  
+  const q = query(
+    itemsCollection,
+    orderBy('createdAt', 'desc'),
+    startAfter(lastVisible),
+    limit(pageSize)
+  );
+  
+  const itemsSnapshot = await getDocs(q);
+  
+  // Get the new last document for future pagination
+  const newLastVisible = itemsSnapshot.docs[itemsSnapshot.docs.length - 1];
+  
+  const itemsList = itemsSnapshot.docs.map((doc) => ({
+    id: doc.id,
+    type: doc.data().type,
+    title: doc.data().title,
+    text: doc.data().text,
+    codes: doc.data().codes,
+    tags: doc.data().tags,
+    createdAt: doc.data().createdAt,
+    updatedAt: doc.data().updatedAt
+  }));
+  
+  return {
+    items: itemsList,
+    lastVisible: newLastVisible
+  };
+};
