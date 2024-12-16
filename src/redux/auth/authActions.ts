@@ -7,9 +7,8 @@ export const getUserCredentials = createAsyncThunk(
   async (data: any, { dispatch, getState, rejectWithValue }) => {
     try {
       const userCredential = await login(data.email, data.password);
-      const userData = await getUserbyUUID(userCredential.user.uid);
-      console.log("userData", userData);
-      return userData;
+      const userData = await getUserbyUUID(userCredential.user.uid);      
+      return {...userData, email: userCredential.user.email, uid: userCredential.user.uid};
     } catch (error) {
       return rejectWithValue(error);
     }

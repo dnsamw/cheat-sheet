@@ -16,9 +16,15 @@ const authConfig = {
   whitelist: ["authUser"],
 };
 
+const itemsConfig = {
+  key: "items",
+  storage,
+  whitelist: ["items"],
+};
+
 const rootReducer = combineReducers({
   auth: persistReducer(authConfig, authReducer),
-  items: itemsReducer,
+  items: persistReducer(itemsConfig, itemsReducer),
 });
 
 export default rootReducer;

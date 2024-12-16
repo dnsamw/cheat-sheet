@@ -14,7 +14,6 @@ import { ModalActionKind, ModalMethods, ModalTypes } from "../types/modal";
 import "react-toastify/dist/ReactToastify.css";
 import "../assets/scss/cheat-item.scss";
 import ItemInfo from "./UI/ItemInfo";
-import { useAuth } from "../contexts/authContext";
 import IconDropdownList from "./UI/IconDropdownList";
 type Props = {
   item: I_CheatItem;
@@ -27,7 +26,6 @@ function CheatItem({ item, isLoggedIn }: Props) {
   // const [isModalOpen, setModalOpen] = useState(false);
   const { deleteCheatItem } = useDataOperations();
   const { dispatch } = useModal();
-  // const {state:{user}} = useAuth();
 
   // console.log("user",user);
   
