@@ -17,6 +17,7 @@ import IconButton from "./UI/IconButton";
 import DropdownSelectionList from "./UI/DropdownSelectionList";
 import { useAppDispatch } from "../redux/store";
 import { clearAuthUser } from "../redux/auth/authSlice";
+import { clearItems } from "../redux/items/itemsSlice";
 
 const MemoizedLetterAvatar = memo(
   LetterAvatar,
@@ -44,6 +45,7 @@ function NavbarPrime({}: Props) {
       });
 
       dispatchX(clearAuthUser());
+      dispatchX(clearItems());
 
       dispatch({ type: AuthActionKind.SET_LOADING, payload: false });
     } catch (error: FirebaseError | any) {

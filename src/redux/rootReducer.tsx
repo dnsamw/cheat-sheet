@@ -2,12 +2,12 @@ import { combineReducers } from "@reduxjs/toolkit";
 import persistReducer from "redux-persist/es/persistReducer";
 import storage from "redux-persist/lib/storage";
 
-import auth from "./auth/authSlice";
-import items from "./items/itemsSlice";
+import authReducer, { AuthSlice } from "./auth/authSlice";
+import itemsReducer, { ItemsSlice } from "./items/itemsSlice";
 
 export interface RootState {
-  auth: any;
-  items: any;
+  auth: AuthSlice;
+  items: ItemsSlice;
 }
 
 const authConfig = {
@@ -17,8 +17,8 @@ const authConfig = {
 };
 
 const rootReducer = combineReducers({
-    auth : persistReducer(authConfig, auth),
-    items
-})
+  auth: persistReducer(authConfig, authReducer),
+  items: itemsReducer,
+});
 
 export default rootReducer;
