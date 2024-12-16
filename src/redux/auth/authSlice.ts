@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getUserCredentials } from "./authActions";
 
-interface AuthSlice {
+export interface AuthSlice {
   loading: boolean;
   authUser: any;
   authError: string;

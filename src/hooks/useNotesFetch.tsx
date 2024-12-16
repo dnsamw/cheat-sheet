@@ -4,6 +4,8 @@ import { getAllNotes } from "../services/firestoreService";
 import { ItemActionKind } from "../types/item";
 import { ITEMS_CACHE_KEY } from "../reducers/intemReducer";
 import { isCacheValid } from "../utils";
+import { useAppDispatch } from "../redux/store";
+import { getItemsData } from "../redux/items/itemsActions";
 
 export const useNotesFetch = () => {
   const context = useContext(ItemContext);
@@ -12,20 +14,30 @@ export const useNotesFetch = () => {
     throw new Error("App must be used within an ItemProvider");
   }
   const { state, dispatch } = context;
+  const dispatchX = useAppDispatch();
 
   useEffect(() => {
-     
-      const fetchNotes = async () => {
-        try {
-          const cachedData = localStorage.getItem(ITEMS_CACHE_KEY);
+    const fetchNotes = async () => {
+      try {
+        // integration test
+        dispatchX(getItemsData()).unwrap();
 
-          if (cachedData) {
-            const parsedData = JSON.parse(cachedData);
-            if (isCacheValid(parsedData.lastFetched)) {
-              dispatch({ type: ItemActionKind.FETCH_ITEMS_SUCCESS, payload: parsedData.items });
-              return;
-            }
+        const cachedData = localStorage.getItem(ITEMS_CACHE_KEY);
+        if (cachedData) {
+          console.log("has cache");
+
+          const parsedData = JSON.parse(cachedData);
+          console.log("parsedData", parsedData);
+
+          if (isCacheValid(parsedData.lastFetched)) {
+            dispatch({
+              type: ItemActionKind.FETCH_ITEMS_SUCCESS,
+              payload: parsedData.items,
+            });
+            return;
           }
+        } else {
+          console.log("no cache");
 
           dispatch({ type: ItemActionKind.FETCH_ITEMS_REQUEST });
           const items = await getAllNotes();
@@ -33,20 +45,27 @@ export const useNotesFetch = () => {
             type: ItemActionKind.FETCH_ITEMS_SUCCESS,
             payload: items,
           });
-        } catch (error) {
-          console.log("Context",{error});
-          
-          dispatch({
-            type: ItemActionKind.FETCH_ITEMS_FAILURE,
-            payload:
-              error instanceof Error
-                ? error.message
-                : "An unknown error occurred",
-          });
         }
-      };
-      
-      fetchNotes();
+        dispatch({ type: ItemActionKind.FETCH_ITEMS_REQUEST });
+        const items = await getAllNotes();
+        dispatch({
+          type: ItemActionKind.FETCH_ITEMS_SUCCESS,
+          payload: items,
+        });
+      } catch (error) {
+        console.log("Context", { error });
+
+        dispatch({
+          type: ItemActionKind.FETCH_ITEMS_FAILURE,
+          payload:
+            error instanceof Error
+              ? error.message
+              : "An unknown error occurred",
+        });
+      }
+    };
+
+    fetchNotes();
   }, []);
 
   return {
