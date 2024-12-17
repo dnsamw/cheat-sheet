@@ -1,40 +1,59 @@
-import "../App.css";
-import { useNotesFetch } from "../hooks/useNotesFetch";
+import { useEffect, useState } from "react";
 import CheatItem from "../components/CheatItem";
 import MainNavigatorLayout from "../layouts/MainNavigatorLayout";
-import { useEffect } from "react";
-import useItemsSelector from "../redux/items/itemsSelector";
-import { useAppDispatch } from "../redux/store";
-import { getItemsData } from "../redux/items/itemsActions";
-import { setItemsError } from "../redux/items/itemsSlice";
 import Spinner from "../components/UI/Spinner";
+import useItemsSelector from "../redux/items/itemsSelector";
+import useUiSelector from "../redux/ui/uiSelector";
 import { sortByUpdatedDate } from "../utils";
+import { useAppDispatch } from "../redux/store";
+import { setItemsError } from "../redux/items/itemsSlice";
+import { getItemsData } from "../redux/items/itemsActions";
+import { getTagsData } from "../redux/ui/uiActions";
 
-type Props = {};
+import "../App.css";
+import { Tag } from "../redux/ui/uiSlice";
 
-const AdminPage = ({}: Props) => {
-  // const { items, error, loading } = useNotesFetch();
-  const {items: items2, itemsError: error2, loading: loading2} = useItemsSelector();
-  const dispatchX = useAppDispatch();
-  useEffect(() => {
-    try {
-      if (items2.length === 0){
-        dispatchX(getItemsData()).unwrap(); 
+  type Props = {};
+
+  const AdminPage = ({}: Props) => {
+    const { items, loading } = useItemsSelector();
+    const { tags,selectedTags } = useUiSelector();
+    const dispatch = useAppDispatch();
+    const [filteredItems, setFilteredItems] = useState<any[]>([]);
+
+    useEffect(() => {
+      try {
+        if (items.length === 0) dispatch(getItemsData()).unwrap();
+        if (tags.length === 0) dispatch(getTagsData()).unwrap();
+      } catch (error) {
+        dispatch(setItemsError(error));
       }
-    } catch (error) {
-      dispatchX(setItemsError(error));
-    }
-  }, []);
-  return (
-    <MainNavigatorLayout>
-      <>
-        <div style={{ marginTop: "20px" }}></div>
-        {loading2 ? <Spinner /> : sortByUpdatedDate(items2)?.map((cheatItem: any) => (
-          <CheatItem key={cheatItem.id} item={cheatItem} isLoggedIn={true} />
-        ))}
-      </>
-    </MainNavigatorLayout>
-  );
-};
+    }, []);
 
-export default AdminPage;
+    useEffect(() => {
+      const filteredItems = items.filter((item: any) => {
+        return selectedTags.some((tag: Tag) => item.tags.includes(tag.name));
+      })
+
+      setFilteredItems(filteredItems);
+    },[selectedTags.length]);
+
+    const itemsToRender = selectedTags.length > 0 ? filteredItems : items;
+
+    return (
+      <MainNavigatorLayout>
+        <>
+          <div style={{ marginTop: "20px" }}></div>
+          {loading ? (
+            <Spinner />
+          ) : (
+            sortByUpdatedDate(itemsToRender)?.map((cheatItem: any) => (
+              <CheatItem key={cheatItem.id} item={cheatItem} isLoggedIn={true} />
+            ))
+          )}
+        </>
+      </MainNavigatorLayout>
+    );
+  };
+
+  export default AdminPage;

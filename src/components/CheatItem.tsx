@@ -17,6 +17,7 @@ import ItemInfo from "./UI/ItemInfo";
 import IconDropdownList from "./UI/IconDropdownList";
 import { useAppDispatch } from "../redux/store";
 import { deleteItemData } from "../redux/items/itemsActions";
+import useUiSelector from "../redux/ui/uiSelector";
 
 type Props = {
   item: I_CheatItem;
@@ -26,8 +27,7 @@ type Props = {
 function CheatItem({ item, isLoggedIn }: Props) {
   const [showConfirm, setShowConfirm] = useState(false);
   const [showMoreOptions, setShowMoreOptions] = useState(false);
-  // const [isModalOpen, setModalOpen] = useState(false);
-  const { deleteCheatItem } = useDataOperations();
+  const {tags} = useUiSelector();
   const { dispatch } = useModal();
 
   const dispatchX = useAppDispatch();
@@ -76,7 +76,7 @@ function CheatItem({ item, isLoggedIn }: Props) {
         </div>
 
         <div className="cheat-title">
-          <p style={{ color: "#00bcd4", fontSize: "15px" }}>Type : {item.type}</p>
+          <p style={{ color: "#7e7e7e8c", fontSize: "12px" }}>{item.type}</p>
           {item.title}
         </div>
         <div
@@ -90,7 +90,7 @@ function CheatItem({ item, isLoggedIn }: Props) {
           <ul>
             {item.tags.map((tag: TagType | string, i: number) => {
               if (typeof tag === "string") {
-                const tagObject = tagdata.find(
+                const tagObject = tags.find(
                   (t) => t.name === tag
                 ) as TagType;
                 return (

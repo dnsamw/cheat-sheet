@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import "../../assets/scss/tag.scss";
 import { Config } from "../../config/appConfig";
+import { hexToRgba } from "../../utils";
 
 type Props = {
   color: string;
@@ -18,7 +19,7 @@ function Tag({ color, tag, onClick }: Props) {
   return (
     <li
       onClick={handleClick}
-      style={{ backgroundColor: Config.colors.getBg(color), color: color }}
+      style={{ backgroundColor: Config.colors.getBg(hexToRgba(color)), color: color }}
     >
       {tag}
     </li>

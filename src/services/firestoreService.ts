@@ -20,6 +20,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 
 const itemsCollection = collection(db, "items");
 const usersCollection = collection(db, "users");
+const tagsCollection = collection(db, "tags");
 
 //Notes
 export const getAllNotes = async () => {
@@ -82,10 +83,9 @@ export const createItem = async (
     updatedAt: serverTimestamp(),
   });
 
-
   // Fetch the newly created document to get full details
   const docSnap = await getDoc(docRef);
-  
+
   if (!docSnap.exists()) {
     throw new Error("Created document does not exist");
   }
@@ -95,7 +95,7 @@ export const createItem = async (
     id: docRef.id,
     ...docSnap.data(),
     createdAt: docSnap.data().createdAt.toMillis(),
-    updatedAt: docSnap.data().updatedAt.toMillis()
+    updatedAt: docSnap.data().updatedAt.toMillis(),
   } as I_CheatItem;
 };
 
@@ -119,7 +119,7 @@ export const updateItem = async (
     id: docSnap.id,
     ...docSnap.data(),
     createdAt: docSnap.data().createdAt,
-    updatedAt: docSnap.data().updatedAt 
+    updatedAt: docSnap.data().updatedAt,
   } as I_CheatItem;
 };
 
@@ -234,4 +234,15 @@ export const getNextPage = async (lastVisible: any, pageSize = 10) => {
     items: itemsList,
     lastVisible: newLastVisible,
   };
+};
+
+// Tags
+export const getAllTags = async () => {
+  const tagsSnapshot = await getDocs(tagsCollection);
+  const tagsList = tagsSnapshot.docs.map((doc) => ({
+    id: doc.id,
+    name: doc.data().name,
+    color: doc.data().color,
+  }));
+  return tagsList;
 };

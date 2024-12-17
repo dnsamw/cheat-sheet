@@ -1,9 +1,11 @@
-import { TagType } from "../types/tag";
-import Tag from "./UI/Tag";
-import "../assets/scss/tag-selector.scss";
 import { useState } from "react";
 import { LuXCircle } from "react-icons/lu";
+import Tag from "./UI/Tag";
+import { TagType } from "../types/tag";
+import useUiSelector from "../redux/ui/uiSelector";
 import { Config } from "../config/appConfig";
+
+import "../assets/scss/tag-selector.scss";
 
 type Props = {
   value: string[];
@@ -27,6 +29,7 @@ export const tagdata: TagType[] = [
 
 const TagSelector:React.ForwardRefRenderFunction<HTMLDivElement, Props> = ({ value, onChange }, ref)=>{
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const {tags} = useUiSelector();
 
   const handleTagClick = (tagName: string) => {
     if (tagName && !value.includes(tagName)) {
@@ -52,7 +55,7 @@ const TagSelector:React.ForwardRefRenderFunction<HTMLDivElement, Props> = ({ val
         ))}
       </div>
       <div className="tag-lables">
-      {tagdata.map((tag: any, i: number) => (
+      {tags.map((tag: any, i: number) => (
         <span className="tag-wrapper" key={i}>
           <Tag
             tag={tag.name}

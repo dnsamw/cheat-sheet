@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../assets/scss/subject-selector.scss';
 import { LuX } from "react-icons/lu";
+import { useAppDispatch } from '../redux/store';
+import { removeSelectedTag, selectTag } from '../redux/ui/uiSlice';
 
 export interface Subject {
   id: string;
@@ -19,6 +21,7 @@ const SubjectSelector: React.FC<SubjectSelectorProps> = ({ subjects, onChange })
   const [isOpen, setIsOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     setFilteredSubjects(subjects);
@@ -54,6 +57,7 @@ const SubjectSelector: React.FC<SubjectSelectorProps> = ({ subjects, onChange })
   };
 
   const handleSubjectSelect = (subject: Subject) => {
+    dispatch(selectTag(subject));
     if (!selectedSubjects.some(s => s.id === subject.id)) {
       setSelectedSubjects([...selectedSubjects, subject]);
       // onChange([...selectedSubjects, subject]);
@@ -64,11 +68,11 @@ const SubjectSelector: React.FC<SubjectSelectorProps> = ({ subjects, onChange })
   };
 
   const handleRemoveSubject = (subject: Subject) => {
+    dispatch(removeSelectedTag(subject));
     setFilteredSubjects([...filteredSubjects, subject]);
     setSelectedSubjects(selectedSubjects.filter(s => s.id !== subject.id));
     onChange(selectedSubjects.filter(s => s.id !== subject.id));
     console.log("selectedse", selectedSubjects);
-    
   };
 
   return (
