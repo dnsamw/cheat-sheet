@@ -58,7 +58,7 @@ const ItemReducer = (
         
         const data1 = {
           ... action.payload,
-          createdAt: Timestamp.now(),
+          createdAt: Timestamp.now().toMillis(),
         }
 
         return {
@@ -75,7 +75,7 @@ const ItemReducer = (
       case ItemActionKind.UPDATE_ITEM_SUCCESS:
         const data2 = {
           ... action.payload,
-          createdAt: Timestamp.now(),
+          createdAt: Timestamp.now().toMillis(),
         }
         return {
           ...state,

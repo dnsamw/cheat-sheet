@@ -10,6 +10,7 @@ import { getItemsData } from "../redux/items/itemsActions";
 import { setItemsError } from "../redux/items/itemsSlice";
 import useAuthSelector from "../redux/auth/authSelector";
 import Spinner from "../components/UI/Spinner";
+import { sortByUpdatedDate } from "../utils";
 
 type Props = {};
 
@@ -39,7 +40,7 @@ function GuestPage({}: Props) {
     <MainNavigatorLayout>
       <>
         <div style={{ marginTop: "20px" }}></div>
-        {loading2 ? <Spinner /> : items2?.map((cheatItem: any) => (
+        {loading2 ? <Spinner /> : sortByUpdatedDate(items2)?.map((cheatItem: any) => (
           <CheatItem
             key={cheatItem.id}
             item={cheatItem}

@@ -8,6 +8,7 @@ import { useAppDispatch } from "../redux/store";
 import { getItemsData } from "../redux/items/itemsActions";
 import { setItemsError } from "../redux/items/itemsSlice";
 import Spinner from "../components/UI/Spinner";
+import { sortByUpdatedDate } from "../utils";
 
 type Props = {};
 
@@ -28,7 +29,7 @@ const AdminPage = ({}: Props) => {
     <MainNavigatorLayout>
       <>
         <div style={{ marginTop: "20px" }}></div>
-        {loading2 ? <Spinner /> : items2?.map((cheatItem: any) => (
+        {loading2 ? <Spinner /> : sortByUpdatedDate(items2)?.map((cheatItem: any) => (
           <CheatItem key={cheatItem.id} item={cheatItem} isLoggedIn={true} />
         ))}
       </>

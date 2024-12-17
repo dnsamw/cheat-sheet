@@ -1,9 +1,22 @@
-import { collection, getDocs, doc, addDoc, getDoc, updateDoc, deleteDoc,serverTimestamp, query, where, orderBy, limit, startAfter } from "firebase/firestore";
-import {db, auth} from "../config/firebaseConfig";
+import {
+  collection,
+  getDocs,
+  doc,
+  addDoc,
+  getDoc,
+  updateDoc,
+  deleteDoc,
+  serverTimestamp,
+  query,
+  where,
+  orderBy,
+  limit,
+  startAfter,
+} from "firebase/firestore";
+import { db, auth } from "../config/firebaseConfig";
 import { I_CheatItem } from "../types/item";
 import { I_User } from "../types/user";
 import { signInWithEmailAndPassword } from "firebase/auth";
-
 
 const itemsCollection = collection(db, "items");
 const usersCollection = collection(db, "users");
@@ -12,7 +25,7 @@ const usersCollection = collection(db, "users");
 export const getAllNotes = async () => {
   const q = query(itemsCollection, where("type", "==", "note"));
   const notesSnapshot = await getDocs(q);
-  
+
   const notesList = notesSnapshot.docs.map((doc) => ({
     id: doc.id,
     type: doc.data().type,
@@ -32,40 +45,82 @@ export const getAllItems = async () => {
   const itemsSnapshot = await getDocs(itemsCollection);
   const itemsList = itemsSnapshot.docs.map((doc) => ({
     id: doc.id,
-    type:doc.data().type,
-    title:doc.data().title,
-    text:doc.data().text,
-    codes:doc.data().codes,
-    tags:doc.data().tags,
-    createdAt:doc.data().createdAt,
-    updatedAt:doc.data().updatedAt
-  }));  
+    type: doc.data().type,
+    title: doc.data().title,
+    text: doc.data().text,
+    codes: doc.data().codes,
+    tags: doc.data().tags,
+    createdAt: doc.data().createdAt,
+    updatedAt: doc.data().updatedAt,
+  }));
   return itemsList;
 };
 
 export const getItemById = async (id: string) => {
   const docRef = doc(itemsCollection, id);
   const docSnap = await getDoc(docRef);
-  if (docSnap.exists()) return { 
-    id: docSnap.id, 
-    type:docSnap.data().type,
-    title:docSnap.data().title, 
-    text:docSnap.data().text, 
-    codes:docSnap.data().codes, 
-    tags:docSnap.data().tags } ;
+  if (docSnap.exists())
+    return {
+      id: docSnap.id,
+      type: docSnap.data().type,
+      title: docSnap.data().title,
+      text: docSnap.data().text,
+      codes: docSnap.data().codes,
+      tags: docSnap.data().tags,
+    };
   return null;
 };
 
-export const createItem = async (item: Omit<I_CheatItem, 'id'>): Promise<string> => {
-  console.log("CREATING FIREBASE SERVICE",item);
-  const docRef = await addDoc(itemsCollection, {...item, createdAt: serverTimestamp(),updatedAt: serverTimestamp()});
-  return docRef.id;
+export const createItem = async (
+  item: Omit<I_CheatItem, "id">
+): Promise<I_CheatItem> => {
+  console.log("CREATING FIREBASE SERVICE", item);
+
+  const docRef = await addDoc(itemsCollection, {
+    ...item,
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  });
+
+
+  // Fetch the newly created document to get full details
+  const docSnap = await getDoc(docRef);
+  
+  if (!docSnap.exists()) {
+    throw new Error("Created document does not exist");
+  }
+
+  // Return the document data with the ID
+  return {
+    id: docRef.id,
+    ...docSnap.data(),
+    createdAt: docSnap.data().createdAt.toMillis(),
+    updatedAt: docSnap.data().updatedAt.toMillis()
+  } as I_CheatItem;
 };
 
-export const updateItem = async (id: string, item: Partial<I_CheatItem>): Promise<void> => {
-  console.log("UPDATING FIREBASE SERVICE",item, id);
+export const updateItem = async (
+  id: string,
+  item: Partial<I_CheatItem>
+): Promise<I_CheatItem> => {
+  console.log("UPDATING FIREBASE SERVICE", item, id);
   const docRef = doc(itemsCollection, id);
-  await updateDoc(docRef, {...item,updatedAt: serverTimestamp()});
+  await updateDoc(docRef, { ...item, updatedAt: serverTimestamp() });
+
+  // Fetch the updated document to get full details
+  const docSnap = await getDoc(docRef);
+
+  if (!docSnap.exists()) {
+    throw new Error("Updated document does not exist");
+  }
+
+  // Return the document data with the ID
+  return {
+    id: docSnap.id,
+    ...docSnap.data(),
+    createdAt: docSnap.data().createdAt,
+    updatedAt: docSnap.data().updatedAt 
+  } as I_CheatItem;
 };
 
 export const deleteItem = async (id: string): Promise<void> => {
@@ -74,31 +129,30 @@ export const deleteItem = async (id: string): Promise<void> => {
 };
 
 // AUTH
-export const login = async (email:string , password:string) => {
+export const login = async (email: string, password: string) => {
   try {
-    return await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+    return await signInWithEmailAndPassword(auth, email, password);
     // const userDoc = await getDoc(doc(db, "users", userCredential.user.uid));
     // const userData = userDoc.data();
   } catch (error) {
     throw new Error("Invaqlid email or password");
   }
-}
+};
 
 export const logout = async () => {
   await auth.signOut();
 };
 // USERS
 
-export const createUser = async (user: Omit<I_User, 'id'>): Promise<string> => {
+export const createUser = async (user: Omit<I_User, "id">): Promise<string> => {
   const docRef = await addDoc(usersCollection, user);
   return docRef.id;
 };
 
-export const updateUser = async (id: string, user: Partial<I_CheatItem>): Promise<void> => {
+export const updateUser = async (
+  id: string,
+  user: Partial<I_CheatItem>
+): Promise<void> => {
   const docRef = doc(usersCollection, id);
   await updateDoc(docRef, user);
 };
@@ -115,25 +169,23 @@ export const getUserbyUUID = async (uuid: string): Promise<any | null> => {
   return null;
 };
 
-
-
 // pagination
 // Function to get initial page of items
 export const getFirstPage = async (pageSize = 10) => {
   const itemsCollection = collection(db, "items");
-  
+
   // Order by creation time and limit the number of items
   const q = query(
-    itemsCollection, 
-    orderBy('createdAt', 'desc'), 
+    itemsCollection,
+    orderBy("createdAt", "desc"),
     limit(pageSize)
   );
-  
+
   const itemsSnapshot = await getDocs(q);
-  
+
   // Get the last document for future pagination
   const lastVisible = itemsSnapshot.docs[itemsSnapshot.docs.length - 1];
-  
+
   const itemsList = itemsSnapshot.docs.map((doc) => ({
     id: doc.id,
     type: doc.data().type,
@@ -142,32 +194,31 @@ export const getFirstPage = async (pageSize = 10) => {
     codes: doc.data().codes,
     tags: doc.data().tags,
     createdAt: doc.data().createdAt,
-    updatedAt: doc.data().updatedAt
+    updatedAt: doc.data().updatedAt,
   }));
-  
+
   return {
     items: itemsList,
-    lastVisible
+    lastVisible,
   };
 };
 
-
 // Function to get next page of items
-export const getNextPage = async (lastVisible:any, pageSize = 10) => {
+export const getNextPage = async (lastVisible: any, pageSize = 10) => {
   const itemsCollection = collection(db, "items");
-  
+
   const q = query(
     itemsCollection,
-    orderBy('createdAt', 'desc'),
+    orderBy("createdAt", "desc"),
     startAfter(lastVisible),
     limit(pageSize)
   );
-  
+
   const itemsSnapshot = await getDocs(q);
-  
+
   // Get the new last document for future pagination
   const newLastVisible = itemsSnapshot.docs[itemsSnapshot.docs.length - 1];
-  
+
   const itemsList = itemsSnapshot.docs.map((doc) => ({
     id: doc.id,
     type: doc.data().type,
@@ -176,11 +227,11 @@ export const getNextPage = async (lastVisible:any, pageSize = 10) => {
     codes: doc.data().codes,
     tags: doc.data().tags,
     createdAt: doc.data().createdAt,
-    updatedAt: doc.data().updatedAt
+    updatedAt: doc.data().updatedAt,
   }));
-  
+
   return {
     items: itemsList,
-    lastVisible: newLastVisible
+    lastVisible: newLastVisible,
   };
 };

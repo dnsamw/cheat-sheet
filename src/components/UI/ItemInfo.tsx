@@ -2,13 +2,13 @@ import { Timestamp } from 'firebase/firestore';
 import '../../assets/scss/item-info.scss'
 
 type Props = {
-  timestamp?: Timestamp
+  timestamp?: number
 }
 
 function ItemInfo({timestamp}: Props) {
   const getTimestamp = () => {
     if (timestamp) {
-      return new Date(timestamp.seconds*1000).toLocaleDateString() + ` @ ${new Date(timestamp.seconds*1000).toLocaleTimeString()}`;
+      return new Date(timestamp).toLocaleDateString() + ` @ ${new Date(timestamp).toLocaleTimeString()}`;
     }
   }
   return (
