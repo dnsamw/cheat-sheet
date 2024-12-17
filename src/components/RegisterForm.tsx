@@ -4,14 +4,17 @@ import "../assets/scss/login-form.scss";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
 import { auth, db } from "../config/firebaseConfig";
-import { useAuth } from "../contexts/authContext";
-import { AuthActionKind } from "../types/auth";
+// import { useAuth } from "../contexts/authContext";
+// import { AuthActionKind } from "../types/auth";
+import { useAppDispatch } from "../redux/store";
+import { setAuthuser } from "../redux/auth/authSlice";
 
 const RegisterForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("user");
-  const { dispatch } = useAuth();
+  // const { dispatch } = useAuth();
+  const dispatchX = useAppDispatch();
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,7 +28,16 @@ const RegisterForm: React.FC = () => {
         email,
         role,
       });
-      dispatch({ type: AuthActionKind.LOGIN, payload: { user: userCredential.user, role } });
+      // dispatch({ type: AuthActionKind.LOGIN, payload: { user: userCredential.user, role } });
+      const userData = {
+        first_name: "",
+        last_name: "",
+        contact_number: "",
+        role,
+        uid: userCredential.user.uid,
+        email:userCredential.user.email,
+      }
+      dispatchX(setAuthuser(userData));
     } catch (error) {
       console.error("Registration error:", error);
     }

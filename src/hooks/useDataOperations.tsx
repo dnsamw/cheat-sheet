@@ -41,6 +41,7 @@ export const useDataOperations = () => {
       const id = await createItem(item);
       dispatch({
         type: ItemActionKind.CREATE_ITEM_SUCCESS,
+        // @ts-ignore 
         payload: { id, ...item },
         
       });

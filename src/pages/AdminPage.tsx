@@ -7,6 +7,8 @@ import useItemsSelector from "../redux/items/itemsSelector";
 import { useAppDispatch } from "../redux/store";
 import { getItemsData } from "../redux/items/itemsActions";
 import { setItemsError } from "../redux/items/itemsSlice";
+import Spinner from "../components/UI/Spinner";
+import { sortByUpdatedDate } from "../utils";
 
 type Props = {};
 
@@ -16,7 +18,9 @@ const AdminPage = ({}: Props) => {
   const dispatchX = useAppDispatch();
   useEffect(() => {
     try {
-      dispatchX(getItemsData()).unwrap(); 
+      if (items2.length === 0){
+        dispatchX(getItemsData()).unwrap(); 
+      }
     } catch (error) {
       dispatchX(setItemsError(error));
     }
@@ -24,8 +28,8 @@ const AdminPage = ({}: Props) => {
   return (
     <MainNavigatorLayout>
       <>
-        {<div style={{ marginTop: "20px" }}></div>}
-        {items2?.map((cheatItem: any) => (
+        <div style={{ marginTop: "20px" }}></div>
+        {loading2 ? <Spinner /> : sortByUpdatedDate(items2)?.map((cheatItem: any) => (
           <CheatItem key={cheatItem.id} item={cheatItem} isLoggedIn={true} />
         ))}
       </>

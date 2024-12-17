@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getItemsData } from "./itemsActions";
-import { clear } from "console";
+import { getItemsData, createItemData, updateItemData, deleteItemData } from "./itemsActions";
+import { I_CheatItem } from "../../types/item";
 
 export interface ItemsSlice {
   loading: boolean;
@@ -28,17 +28,61 @@ const itemsSlice = createSlice({
 
   },
   extraReducers: (builder) => {
+    // Fetch items
     builder.addCase(getItemsData.pending, (state) => {
       state.loading = true;
-    });
-    builder.addCase(getItemsData.fulfilled, (state, action) => {
+    })
+    .addCase(getItemsData.fulfilled, (state, action) => {
       state.loading = false;
       state.items = action.payload;
-    });
-    builder.addCase(getItemsData.rejected, (state, action) => {
+    })
+    .addCase(getItemsData.rejected, (state, action) => {
       state.loading = false;
       state.itemsError = action.payload as string;
-    });
+    })
+
+    // Create item
+    .addCase(createItemData.pending, (state) => {
+      state.loading = true;
+    })
+    .addCase(createItemData.fulfilled, (state, action) => {
+      state.loading = false;
+      state.items.unshift(action.payload);
+    })
+    .addCase(createItemData.rejected, (state, action) => {
+      state.loading = false;
+      state.itemsError = action.payload as string;
+    })
+
+
+    // Update item
+    .addCase(updateItemData.pending, (state) => {
+      state.loading = true;
+    })
+    .addCase(updateItemData.fulfilled, (state, action) => {
+      state.loading = false;
+      const index = state.items.findIndex((item:I_CheatItem) => item.id === action.payload.id);
+      if (index !== -1) {
+        state.items[index] = action.payload;
+      }
+    })
+    .addCase(updateItemData.rejected, (state, action) => {
+      state.loading = false;
+      state.itemsError = action.payload as string;
+    })
+
+    // Delete item
+    .addCase(deleteItemData.pending, (state) => {
+      state.loading = true;
+    })
+    .addCase(deleteItemData.fulfilled, (state, action) => {
+      state.loading = false;
+      state.items = state.items.filter((item:I_CheatItem) => item.id !== action.payload);
+    })
+    .addCase(deleteItemData.rejected, (state, action) => {
+      state.loading = false;
+      state.itemsError = action.payload as string;
+    })
   },
 });
 

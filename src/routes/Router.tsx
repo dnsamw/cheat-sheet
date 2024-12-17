@@ -2,12 +2,15 @@
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { authenticatedRoutes, RouteInterface, unAuthenticatedRoutes } from "./routes";
 import { Suspense } from "react";
-import { useAuth } from "../contexts/authContext";
+// import { useAuth } from "../contexts/authContext";
+import useAuthSelector from "../redux/auth/authSelector";
 // import AdminPage from "../pages/AdminPage";
 
 function Router() {
-  const { state } = useAuth();  
-  const isUserLoggedIn = !!state?.user;
+  // const { state } = useAuth();  
+  const {authUser} = useAuthSelector();
+  // const isUserLoggedIn = !!state?.user;
+  const isUserLoggedIn = !!authUser;
 
   return (
     <BrowserRouter>

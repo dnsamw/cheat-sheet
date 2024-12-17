@@ -14,8 +14,10 @@ import { ModalActionKind, ModalMethods, ModalTypes } from "../types/modal";
 import "react-toastify/dist/ReactToastify.css";
 import "../assets/scss/cheat-item.scss";
 import ItemInfo from "./UI/ItemInfo";
-import { useAuth } from "../contexts/authContext";
 import IconDropdownList from "./UI/IconDropdownList";
+import { useAppDispatch } from "../redux/store";
+import { deleteItemData } from "../redux/items/itemsActions";
+
 type Props = {
   item: I_CheatItem;
   isLoggedIn: boolean;
@@ -27,7 +29,8 @@ function CheatItem({ item, isLoggedIn }: Props) {
   // const [isModalOpen, setModalOpen] = useState(false);
   const { deleteCheatItem } = useDataOperations();
   const { dispatch } = useModal();
-  // const {state:{user}} = useAuth();
+
+  const dispatchX = useAppDispatch();
 
   // console.log("user",user);
   
@@ -37,11 +40,12 @@ function CheatItem({ item, isLoggedIn }: Props) {
     setShowConfirm(true);
   };
 
-  const handleConfirm = (confirm: boolean) => {
+  const handleConfirm = async (confirm: boolean) => {
     setShowConfirm(false);
     if (confirm) {
       // console.log("DELETED")
-      deleteCheatItem(item.id);
+      dispatchX(deleteItemData(item.id)).unwrap();
+      // deleteCheatItem(item.id);
     }
   };
 

@@ -7,8 +7,8 @@ export interface I_CheatItem {
   text: string;
   codes: string[];
   tags: TagType[];
-  createdAt?: Timestamp;
-  updatedAt?: Timestamp;
+  createdAt?: number;
+  updatedAt?: number;
   type?: "note" | "article" | "project";
 }
 

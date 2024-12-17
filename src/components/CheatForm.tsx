@@ -17,7 +17,11 @@ import { useModal } from "../contexts/modalContext";
 import { ModalMethods } from "../types/modal";
 
 import "../assets/scss/cheat-form.scss";
-import { useDataOperations } from "../hooks/useDataOperations";
+// import { useDataOperations } from "../hooks/useDataOperations";
+import { I_CheatItem } from "../types/item";
+import { useAppDispatch } from "../redux/store";
+import { createItemData,updateItemData } from "../redux/items/itemsActions";
+import useItemsSelector from "../redux/items/itemsSelector";
 
 type Props = {};
 
@@ -32,10 +36,14 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-function CheatForm({}: Props) {
-  const { createCheatItem, updateCheatItem, loading } = useDataOperations();
+function 
+CheatForm({}: Props) {
+  // const { createCheatItem, updateCheatItem, loading } = useDataOperations();
+  const {loading} = useItemsSelector();
   const { state: { item, method },} = useModal();
   // console.log({item});
+
+  const dispatchX = useAppDispatch();
   
   const {
     register,
@@ -61,26 +69,31 @@ function CheatForm({}: Props) {
 
   // console.log({fields},);
 
+  
+
   const onSubmit = async (data: FieldValues) => {
     switch (method) {
       case ModalMethods.EDIT:
-        await updateCheatItem({
-          id: item?.id,
+        const updatedItem: Partial<I_CheatItem> = {
           title: data.title,
           text: data.text,
           codes: data.codes,
           tags: data.tags,
           type:"note",
-        });
+        }
+        dispatchX(updateItemData({id:item.id, updatedData:updatedItem})).unwrap();
+        // await updateCheatItem(updatedItem);
         break;
-      case ModalMethods.CREATE:
-        await createCheatItem({
+        case ModalMethods.CREATE:
+          const newItem:Omit<I_CheatItem, "id"> = {
           title: data.title,
           text: data.text,
           codes: data.codes,
           tags: data.tags,
           type:"note",
-        });
+        }
+        dispatchX(createItemData(newItem)).unwrap();
+        // await createCheatItem(newItem);
         reset();
         break;
       default:

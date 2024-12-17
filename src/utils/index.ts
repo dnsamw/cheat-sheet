@@ -27,3 +27,14 @@ export const isCacheValid = (lastFetched: number | null) => {
   if (!lastFetched) return false;
   return Date.now() - lastFetched < CACHE_EXPIRATION;
 };
+
+// sort a list of items by date
+export const sortByUpdatedDate = <T extends { updatedAt: number | string }>(
+  items: T[]
+): T[] => {
+  return [...items].sort((a, b) => {
+    const dateA = typeof a.updatedAt === 'number' ? a.updatedAt : new Date(a.updatedAt).getTime();
+    const dateB = typeof b.updatedAt === 'number' ? b.updatedAt : new Date(b.updatedAt).getTime();
+    return dateB - dateA;
+  });
+}
