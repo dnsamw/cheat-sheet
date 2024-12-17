@@ -1,3 +1,5 @@
+import { log } from "console";
+
 export const Config = {
   uiMasterData: {
     brandName: "Cheat Sheet",
@@ -21,7 +23,7 @@ export const Config = {
   },
 
   colors: {
-    getBg: (fg: string)=> {
+    getBg: (fg: string)=> {     
       if(!fg || fg==="rgb(255, 255, 255)") return "none"
       return fg.replace("rgb", "rgba").replace(")", ", 0.24)");
     },

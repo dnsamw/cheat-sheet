@@ -19,9 +19,11 @@ import CreateEditArticleModal from "./Modals/CreateEditArticleModal";
 import CreateEditNoteModal from "./Modals/CreateEditNoteModal";
 import CreateEditProjectModal from "./Modals/CreateEditProjectModal";
 import { useModal } from "../contexts/modalContext";
+import useUiSelector from "../redux/ui/uiSelector";
 
 const Sidebar = () => {
   const [isMobileView, setIsMobileView] = useState(false);
+  const {tags} = useUiSelector();
   const {
     state: { isOpen, modal, method },
     dispatch,
@@ -154,7 +156,7 @@ const Sidebar = () => {
       </section>
       <section className="sidebar-section">
         <h3>Filter</h3>
-        <SubjectSelector subjects={subjects} onChange={console.log} />
+        <SubjectSelector subjects={tags} onChange={console.log} />
       </section>
 
       <section className="sidebar-section">
