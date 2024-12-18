@@ -19,7 +19,7 @@ function Tag({ color, tag, onClick }: Props) {
   return (
     <li
       onClick={handleClick}
-      style={{ backgroundColor: Config.colors.getBg(hexToRgba(color)), color: color }}
+      style={{ backgroundColor: Config.colors.getBg(hexToRgba(color || "#ffff")), color: color }}
     >
       {tag}
     </li>
