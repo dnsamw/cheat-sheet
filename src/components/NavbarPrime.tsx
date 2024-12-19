@@ -1,24 +1,23 @@
-import { memo, useState } from "react";
-import "../assets/scss/navbar-prime.scss";
-// import { useAuth } from "../contexts/authContext";
-import LetterAvatar from "./UI/LetterAvatar";
-import { Config } from "../config/appConfig";
+import { memo } from "react";
+import { FirebaseError } from "firebase/app";
 import { LuUser, LuPowerOff } from "react-icons/lu";
 import { AiFillSignature } from "react-icons/ai";
-import Logo from "../dev-hub.svg";
-
-// dummy data
-import { dummyProjects as projects } from "../types/project";
-import IconLink from "./UI/IconLink";
-import { AuthActionKind } from "../types/auth";
-import { logout } from "../services/firestoreService";
-import { FirebaseError } from "firebase/app";
+import LetterAvatar from "./UI/LetterAvatar";
 import IconButton from "./UI/IconButton";
+import IconLink from "./UI/IconLink";
 import DropdownSelectionList from "./UI/DropdownSelectionList";
+import { Config } from "../config/appConfig";
+import { logout } from "../services/firestoreService";
 import { useAppDispatch } from "../redux/store";
 import { clearAuthUser } from "../redux/auth/authSlice";
 import { clearItems } from "../redux/items/itemsSlice";
 import useAuthSelector from "../redux/auth/authSelector";
+
+import Logo from "../dev-hub.svg";
+import "../assets/scss/navbar-prime.scss";
+
+// dummy data
+import { dummyProjects as projects } from "../types/project";
 
 const MemoizedLetterAvatar = memo(
   LetterAvatar,
@@ -28,36 +27,18 @@ const MemoizedLetterAvatar = memo(
 type Props = {};
 
 function NavbarPrime({}: Props) {
-  // const {
-  //   state: { user, role },
-  //   dispatch,
-  // } = useAuth();
-
   const {authUser} = useAuthSelector();
 
 
   const dispatchX = useAppDispatch();
 
   const handleLogout = async () => {
-    // console.log("Data",data);
-    // dispatch({ type: AuthActionKind.SET_LOADING, payload: true });
     try {
       await logout();
-      // dispatch({
-      //   type: AuthActionKind.LOGOUT,
-      // });
-
       dispatchX(clearAuthUser());
       dispatchX(clearItems());
-
-      // dispatch({ type: AuthActionKind.SET_LOADING, payload: false });
     } catch (error: FirebaseError | any) {
-      // console.error("Login error:", error.message);
-      // dispatch({ type: AuthActionKind.SET_LOADING, payload: false });
-      // dispatch({
-      //   type: AuthActionKind.SET_AUTH_ERROR,
-      //   payload: "Cannot Logout. Please try again",
-      // });
+      console.error("Login error:", error.message);
     }
   };
 

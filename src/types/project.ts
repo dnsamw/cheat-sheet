@@ -34,6 +34,7 @@ export interface I_Project {
 }
 
 export const dummyProjects: I_Project[] = [
+  { id: "0", type:"project",name: "All" },
   { id: "1", type:"project",name: "FanClub" },
   { id: "2", type:"project",name: "Recoveroo Uk" },
   { id: "3", type:"project",name: "GameHub" },
