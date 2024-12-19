@@ -1,4 +1,3 @@
-import React, { useEffect, useRef } from "react";
 import "../../assets/scss/tag.scss";
 import { Config } from "../../config/appConfig";
 import { hexToRgba } from "../../utils";

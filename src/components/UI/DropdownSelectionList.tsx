@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import SelectionList from "./SelectionList";
 import { LuChevronDown, LuChevronUp } from "react-icons/lu";
-import "../../assets/scss/dropdown-selection-list.scss";
 import { I_Project } from "../../types/project";
-import { onChange } from "react-toastify/dist/core/store";
+
+import "../../assets/scss/dropdown-selection-list.scss";
 
 type Props = {
   items: I_Project[];
