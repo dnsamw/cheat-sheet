@@ -41,6 +41,26 @@ export const getAllNotes = async () => {
   return notesList;
 };
 
+// Articles
+export const getAllArticles = async () => {
+  const q = query(itemsCollection, where("type", "==", "article"));
+  const acrticlesSnapshot = await getDocs(q);
+
+  const articlesList = acrticlesSnapshot.docs.map((doc) => ({
+    id: doc.id,
+    type: doc.data().type,
+    title: doc.data().title,
+    thumbnailUrl: doc.data().thumbnailUrl,
+    body: doc.data().body,
+    tags: doc.data().tags,
+    project: doc.data().project,
+    createdAt: doc.data().createdAt,
+    updatedAt: doc.data().updatedAt,
+  }));
+
+  return articlesList;
+};
+
 // get all items
 export const getAllItems = async () => {
   const itemsSnapshot = await getDocs(itemsCollection);
